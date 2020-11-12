@@ -7,27 +7,41 @@ let httpClient = axios.create({
   },
 });
 
-export const getAllStarships = async () => {
-  const res = await httpClient.get(`starships`);
+export const getAllStarships = async (query = "") => {
+  let queryString = `?search=${query}`;
+  const res = await httpClient.get("starships" + queryString);
   return res.data.results.map(transformStarship);
 };
 
-/* export const getStarship = async (id) => {
-    const starship = await httpClient.get(`/starships/${id}/`);
-  return transformStarship(starship.data);
+/* export const getAllStarships = async () => {
+  const res = await httpClient.get(`starships`);
+  return res.data.results.map(transformStarship);
 }; */
 
 export const getStarship = async (id) => {
   const starship = await httpClient.get(`/starships/${id}/`);
-  let c = await transformStarship(starship.data);
-  let res = Promise.all(
-    c.pilots.map(async (p) => await httpClient.get(p))
-  ).then((resp) => console.log(resp));
+  return transformStarship(starship.data);
+};
+
+export const getStarshipPilots = async (pilots) => {
+  let requests = await pilots.map((pilot) => httpClient.get(pilot));
+  let starshipPilotsData = await Promise.all(requests).then(
+    (response) => response
+  );
+  return starshipPilotsData.map((pilot) => transformStarshipPilots(pilot));
 };
 
 const extractId = (item) => {
   const idRegExp = /\/([0-9]*)\/$/;
   return item.url.match(idRegExp)[1];
+};
+
+const transformStarshipPilots = (pilot) => {
+  const { data } = pilot;
+  return {
+    id: extractId(data),
+    name: data.name,
+  };
 };
 
 const transformStarship = (starship) => {

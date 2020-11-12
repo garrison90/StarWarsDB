@@ -1,11 +1,6 @@
 //import "./App.css";
 import Header from "./components/Header/Header";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Starships from "./components/Starships/Starships";
 import Planets from "./components/Planets/Planets";
 import People from "./components/People/People";
@@ -27,7 +22,7 @@ function App() {
   } = routes;
 
   return (
-    <Router>
+    <>
       <Header />
       <Switch>
         <Route exact path={HOME.INDEX} component={Home} />
@@ -41,7 +36,7 @@ function App() {
           <Redirect to={HOME.INDEX} />
         </Route>
       </Switch>
-    </Router>
+    </>
   );
 }
 
