@@ -8,10 +8,15 @@ export const getPlanetDataRequest = createAction('planets/getPlanetDataRequest')
 export const getPlanetDataRequestSuccess = createAction('planets/getPlanetDataRequestSuccess');
 export const getPlanetDataRequestFailure = createAction('planets/getPlanetDataRequestFailure');
 
+export const getResidentsRequestSuccess = createAction('planets/getResidentsRequestSuccess')
+
+export const getResidentsRequestFailure = createAction('planets/getResidentsRequestFailure')
+
 
 const initialState = {
   planets: [],
-  planet: {}
+  planet: {},
+  residents: []
 };
 
 export default createReducer(initialState,(builder)=>{
@@ -32,6 +37,12 @@ export default createReducer(initialState,(builder)=>{
     state.planet = action.payload
   })
   .addCase(getPlanetDataRequestFailure,(state,action)=>{
+    return state
+  })
+  .addCase(getResidentsRequestSuccess,(state,action)=>{
+    state.residents = action.payload
+  })
+  .addCase(getResidentsRequestFailure,(state,action)=>{
     return state
   })
 })
