@@ -1,4 +1,4 @@
-import { call, put, select, takeEvery } from "redux-saga/effects";
+import { call, getContext, put, select, takeEvery } from "redux-saga/effects";
 import {
   GET_SEARCH_INPUT_VALUE,
   GET_STARSHIPS_REQUEST,
@@ -17,7 +17,13 @@ export default function* starshipsSaga() {
 function* starshipsSagaWorker() {
   try {
     const query = yield select(selectValue);
-    const results = yield call(getAllStarships, query);
+    const history = yield getContext("history");
+    let queryString = query ? `?search=${query}` : "";
+    history.push({
+      pathname: "/starships",
+      search: queryString,
+    });
+    const results = yield call(getAllStarships, queryString);
     yield put(getStarshipsSuccess(results));
   } catch (e) {
     console.log(e);

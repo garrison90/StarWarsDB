@@ -25,8 +25,8 @@ function createSagaInjector(runSaga, rootSaga) {
   return { injectSaga, ejectSaga };
 }
 
-export default function configureStore() {
-  const sagaMiddleware = createSagaMiddleware();
+export default function configureStore({ history }) {
+  const sagaMiddleware = createSagaMiddleware({ context: { history } });
 
   const store = createStore(
     rootReducer,

@@ -18,7 +18,7 @@ function App() {
     PEOPLE,
     PERSON_DETAILS,
     PLANETS,
-    PLANETS_DETAILS,
+    PLANET_DETAILS,
   } = routes;
 
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route exact path={PEOPLE.INDEX} component={People} />
         <Route path={PERSON_DETAILS.INDEX} component={PersonDetails} />
         <Route exact path={PLANETS.INDEX} component={Planets} />
-        <Route path={PLANETS_DETAILS.INDEX} component={PlanetDetails} />
+        <Route path={PLANET_DETAILS.INDEX} component={PlanetDetails} />
         <Route path="*">
           <Redirect to={HOME.INDEX} />
         </Route>

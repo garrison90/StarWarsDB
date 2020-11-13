@@ -8,14 +8,14 @@ import configureStore from "./store";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-/* export const history = createBrowserHistory();*/
+export const history = createBrowserHistory();
 
-export const store = configureStore();
+export const store = configureStore({ history });
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <App />
       </Router>
     </Provider>

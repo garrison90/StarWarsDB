@@ -1,15 +1,15 @@
 import axios from "axios";
+import { extractId } from "../helpers/helpers";
 
-let httpClient = axios.create({
+export const httpClient = axios.create({
   baseURL: "https://swapi.dev/api",
   headers: {
     "Content-Type": "application/json; charset=utf-8",
   },
 });
 
-export const getAllStarships = async (query = "") => {
-  let queryString = `?search=${query}`;
-  const res = await httpClient.get("starships" + queryString);
+export const getAllStarships = async (query) => {
+  const res = await httpClient.get("starships" + query);
   return res.data.results.map(transformStarship);
 };
 
@@ -29,11 +29,6 @@ export const getStarshipPilots = async (pilots) => {
     (response) => response
   );
   return starshipPilotsData.map((pilot) => transformStarshipPilots(pilot));
-};
-
-const extractId = (item) => {
-  const idRegExp = /\/([0-9]*)\/$/;
-  return item.url.match(idRegExp)[1];
 };
 
 const transformStarshipPilots = (pilot) => {
