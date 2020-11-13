@@ -6,8 +6,6 @@ import {
   GET_PERSON_HOMEWORLD_SUCCESS,
 } from "../actionsTypes/people";
 
-import { createAction } from "@reduxjs/toolkit";
-
 export const getPersonDetailsRequest = (id) => {
   return {
     type: GET_PERSON_DETAILS_REQUEST,
@@ -40,11 +38,3 @@ export const getPersonHomeworldFailure = () => {
     type: GET_PERSON_HOMEWORLD_FAILURE,
   };
 };
-
-export const getPeopleDataRequest = createAction("GET_PEOPLE_DATA_REQUEST");
-export const getPeopleDataRequestsSuccess = createAction(
-  "GET_PEOPLE_DATA_REQUEST_SUCCESS"
-);
-export const getPeopleDataRequestFailure = createAction(
-  "GET_PEOPLE_DATA_REQUEST_FAILURE"
-);

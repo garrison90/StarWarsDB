@@ -1,30 +1,14 @@
 import React from "react";
-import Table from "react-bootstrap/esm/Table";
 
-function People() {
+function People({ person, reallocatte }) {
   return (
-    <Table striped bordered hover variant="dark">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Population</th>
-          <th>Rotation Period</th>
-          <th>Diameter</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* {planets.map((planet) => (
-          <tr key={planet.id} onClick={() => directedAt(planet.id)}>
-            <td>{planet.id}</td>
-            <td>{planet.name}</td>
-            <td>{planet.population}</td>
-            <td>{planet.rotationPeriod}</td>
-            <td>{planet.diameter}</td>
-          </tr>
-        ))} */}
-      </tbody>
-    </Table>
+    <tr onClick={() => reallocatte(person.id)}>
+      <td>{person.id}</td>
+      <td>{person.name}</td>
+      <td>{person.birthYear}</td>
+      <td>{person.eyeColor}</td>
+      <td>{person.gender}</td>
+    </tr>
   );
 }
 

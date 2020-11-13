@@ -8,5 +8,5 @@ export const getAllPlanets = async () => {
 
 export const getPlanet = async (id) => {
   const planet = await httpClient(`/planets/${id}/`);
-  return transformPlanet(planet);
+  return transformPlanet(planet.data);
 };

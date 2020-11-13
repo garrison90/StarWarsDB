@@ -15,9 +15,9 @@ function* personDetailsSagaWorker(action) {
     const { payload } = action;
     const result = yield call(getPerson, payload);
     yield put(getPersonDetailsRequestSuccess(result));
-    const planet = yield call(getPersonHomeworld, result.homeworld);
+    /* const planet = yield call(getPersonHomeworld, result.homeworld);
     console.log(planet, "saga");
-    yield put(getPersonHomeworldSuccess(planet));
+    yield put(getPersonHomeworldSuccess(planet)); */
   } catch (e) {
     console.log(e);
     /* yield put(getStarshipDetailsFailure());

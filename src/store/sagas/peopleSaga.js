@@ -1,16 +1,18 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { getAllPlanets } from "../../services/planets-service";
-import { getPlanetsRequestSuccess } from "../actions/planets";
-import { GET_PLANETS_REQUEST } from "../actionsTypes/planets";
+import { getAllPeopleRequest, getAllPeopleRequestSuccess } from "../reducers/peopleSlice";
+import {getAllPeople} from '../../services/people-service';
+
 
 export default function* peopleSaga() {
-  yield takeEvery(GET_PLANETS_REQUEST, peopleSagaWorker);
+  yield takeEvery(getAllPeopleRequest.toString(), peopleSagaWorker);
 }
 
 function* peopleSagaWorker() {
   try {
-    let results = yield call(getAllPlanets);
-    yield put(getPlanetsRequestSuccess(results));
+    console.log('saga started');
+    let results = yield call(getAllPeople);
+    console.log(results);
+    yield put(getAllPeopleRequestSuccess(results));
   } catch (e) {
     console.log(e);
     //yield put(getStarshipsFailure());

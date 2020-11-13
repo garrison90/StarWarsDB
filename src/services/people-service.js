@@ -1,10 +1,9 @@
 import { httpClient } from "./api";
 import { transformPerson } from "../helpers/helpers";
 
-const getAllPeople = async () => {
-  const res = await this.getResource(`/people/`);
-  console.log(res);
-  return res.results.map(transformPerson);
+export const getAllPeople = async () => {
+  const res = await httpClient.get(`/people/`);
+  return res.data.results.map(transformPerson);
 };
 
 export const getPerson = async (id) => {

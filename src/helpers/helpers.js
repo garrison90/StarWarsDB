@@ -10,6 +10,8 @@ export const transformPlanet = (planet) => {
     population: planet.population,
     rotationPeriod: planet.rotation_period,
     diameter: planet.diameter,
+    residents: planet.residents,
+    climate: planet.climate
   };
 };
 

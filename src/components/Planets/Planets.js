@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Table from "react-bootstrap/esm/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlanetsRequest } from "../../store/actions/planets";
 import planetsSaga from "../../store/sagas/planetsSaga";
 import { selectPlanets } from "../../store/selectors/planets";
 import { useInjectSaga } from "../../store/sagas/useInjectSaga";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../constansts/routes";
+import { getPlanetsDataRequest } from "../../store/reducers/planetsReducer";
 
 function Planets() {
   useInjectSaga("PlanetsSaga", planetsSaga);
@@ -15,10 +15,8 @@ function Planets() {
   const history = useHistory();
   const { PLANET_DETAILS } = routes;
 
-  console.log(planets);
-
   useEffect(() => {
-    dispatch(getPlanetsRequest());
+    dispatch(getPlanetsDataRequest());
   }, [dispatch]);
 
   const directedAt = (id) => {
