@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { getStarshipsRequest } from "../../store/actions/starships";
+import { getStarshipsRequest } from "../../store/reducers/starshipsSlice";
 import starshipsSaga from "../../store/sagas/starshipsSaga";
 import { useInjectSaga } from "../../store/sagas/useInjectSaga";
 import { selectStarships } from "../../store/selectors/starships";

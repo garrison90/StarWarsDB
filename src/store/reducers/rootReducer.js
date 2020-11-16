@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import starshipsReducer from "./starshipsReducer";
 import peopleReducer from "./peopleSlice";
 import planetsReducer from "./planetsReducer";
+import starshipsSlice from "./starshipsSlice";
 
 export default combineReducers({
-  starships: starshipsReducer,
+  starships: starshipsSlice,
   people: peopleReducer,
   planets: planetsReducer,
 });

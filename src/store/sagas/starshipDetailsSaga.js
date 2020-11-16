@@ -1,27 +1,26 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { getStarship, getStarshipPilots } from "../../services/api";
+import {
+  getStarship,
+  getStarshipPilots,
+} from "../../services/starships-service";
+
 import {
   getStarshipDetailsFailure,
+  getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
-  getStarshipPilotsFailure,
-  getStarshipPilotsSuccess,
-} from "../actions/starships";
-import { GET_STARSHIP_DETAILS_REQUEST } from "../actionsTypes/starships";
+} from "../reducers/starshipsSlice";
 
 export default function* starshipDetailsSaga() {
-  yield takeEvery(GET_STARSHIP_DETAILS_REQUEST, starshipDetailsSagaWorker);
+  yield takeEvery(getStarshipDetailsRequest.type, starshipDetailsSagaWorker);
 }
 
 function* starshipDetailsSagaWorker(action) {
   try {
     const { payload } = action;
-    const result = yield call(getStarship, payload);
-    const pilots = yield call(getStarshipPilots, result.pilots);
-    yield put(getStarshipDetailsSuccess(result));
-    yield put(getStarshipPilotsSuccess(pilots));
+    const starship = yield call(getStarship, payload);
+    const pilots = yield call(getStarshipPilots, starship.pilots);
+    yield put(getStarshipDetailsSuccess({ starship, pilots }));
   } catch (e) {
-    console.log(e);
     yield put(getStarshipDetailsFailure());
-    yield put(getStarshipPilotsFailure());
   }
 }

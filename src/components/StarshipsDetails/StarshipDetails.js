@@ -4,9 +4,9 @@ import { useInjectSaga } from "../../store/sagas/useInjectSaga";
 import starshipDetailsSaga from "../../store/sagas/starshipDetailsSaga";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStarship } from "../../store/selectors/starships";
-import { getStarshipDetailsRequest } from "../../store/actions/starships";
 import { useParams } from "react-router-dom";
 import StarshipPilots from "../StarshipPilots/StarshipPilots";
+import { getStarshipDetailsRequest } from "../../store/reducers/starshipsSlice";
 
 function StarshipDetails() {
   useInjectSaga("starshipDetailsSaga", starshipDetailsSaga);

@@ -1,26 +1,25 @@
-import { call, put, takeEvery } from "redux-saga/effects";
-import { getPerson, getPersonHomeworld } from "../../services/people-service";
+import { call, put, takeEvery, all } from "redux-saga/effects";
+import { idRegExp } from "../../helpers/helpers";
+import { getPerson, getPersonStarships } from "../../services/people-service";
+import { getPlanet } from "../../services/planets-service";
 import {
-  getPersonDetailsRequestSuccess,
-  getPersonHomeworldSuccess,
-} from "../actions/people";
-import { GET_PERSON_DETAILS_REQUEST } from "../actionsTypes/people";
+  getPersonDataRequest,
+  getPersonDataRequestSuccess,
+} from "../reducers/peopleSlice";
 
 export default function* personDetailsSaga() {
-  yield takeEvery(GET_PERSON_DETAILS_REQUEST, personDetailsSagaWorker);
+  yield takeEvery(getPersonDataRequest.type, personDetailsSagaWorker);
 }
 
 function* personDetailsSagaWorker(action) {
   try {
     const { payload } = action;
-    const result = yield call(getPerson, payload);
-    yield put(getPersonDetailsRequestSuccess(result));
-    /* const planet = yield call(getPersonHomeworld, result.homeworld);
-    console.log(planet, "saga");
-    yield put(getPersonHomeworldSuccess(planet)); */
-  } catch (e) {
-    console.log(e);
-    /* yield put(getStarshipDetailsFailure());
-    yield put(getStarshipPilotsFailure()); */
-  }
+    const person = yield call(getPerson, payload);
+    const planetId = person.homeworld.match(idRegExp)[1];
+    const [starships, planet] = yield all([
+      yield call(getPersonStarships, person.starships),
+      yield call(getPlanet, planetId),
+    ]);
+    yield put(getPersonDataRequestSuccess({ person, planet, starships }));
+  } catch (e) {}
 }

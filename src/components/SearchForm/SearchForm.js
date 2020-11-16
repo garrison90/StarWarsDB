@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getSearchInputValue } from "../../store/actions/starships";
+import { getSearchInputValue } from "../../store/reducers/starshipsSlice";
 
 function SearchForm() {
   const [value, setValue] = useState("");
+
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {

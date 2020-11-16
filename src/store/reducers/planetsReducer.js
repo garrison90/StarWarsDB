@@ -1,48 +1,38 @@
-import { createAction, createReducer } from '@reduxjs/toolkit'
-
-export const getPlanetsDataRequest = createAction('planets/getPlanetsDataRequest'); 
-export const getPlanetsDataRequestSuccess = createAction('planets/getPlanetsDataRequestSuccess');
-export const getPlanetsDataRequestFailure = createAction('planets/getPlanetsDataRequestFailure');
-
-export const getPlanetDataRequest = createAction('planets/getPlanetDataRequest'); 
-export const getPlanetDataRequestSuccess = createAction('planets/getPlanetDataRequestSuccess');
-export const getPlanetDataRequestFailure = createAction('planets/getPlanetDataRequestFailure');
-
-export const getResidentsRequestSuccess = createAction('planets/getResidentsRequestSuccess')
-
-export const getResidentsRequestFailure = createAction('planets/getResidentsRequestFailure')
-
+import { createReducer } from "@reduxjs/toolkit";
+import {
+  getPlanetDataRequest,
+  getPlanetDataRequestFailure,
+  getPlanetDataRequestSuccess,
+  getPlanetsDataRequest,
+  getPlanetsDataRequestFailure,
+  getPlanetsDataRequestSuccess,
+} from "../actions/planets";
 
 const initialState = {
   planets: [],
   planet: {},
-  residents: []
+  residents: [],
 };
 
-export default createReducer(initialState,(builder)=>{
+export default createReducer(initialState, (builder) => {
   builder
-  .addCase(getPlanetsDataRequest,(state,action)=>{
-    return state
-  })
-  .addCase(getPlanetsDataRequestSuccess,(state,action)=>{
-    state.planets = action.payload
-  })
-  .addCase(getPlanetsDataRequestFailure,(state,action)=>{
-    return state
-  })
-  .addCase(getPlanetDataRequest,(state,action)=>{
-    return state
-  })
-  .addCase(getPlanetDataRequestSuccess,(state,action)=>{
-    state.planet = action.payload
-  })
-  .addCase(getPlanetDataRequestFailure,(state,action)=>{
-    return state
-  })
-  .addCase(getResidentsRequestSuccess,(state,action)=>{
-    state.residents = action.payload
-  })
-  .addCase(getResidentsRequestFailure,(state,action)=>{
-    return state
-  })
-})
+    .addCase(getPlanetsDataRequest, (state, action) => {
+      return state;
+    })
+    .addCase(getPlanetsDataRequestSuccess, (state, action) => {
+      state.planets = action.payload;
+    })
+    .addCase(getPlanetsDataRequestFailure, (state, action) => {
+      return state;
+    })
+    .addCase(getPlanetDataRequest, (state, action) => {
+      return state;
+    })
+    .addCase(getPlanetDataRequestSuccess, (state, action) => {
+      state.planet = action.payload.planet;
+      state.residents = action.payload.residents;
+    })
+    .addCase(getPlanetDataRequestFailure, (state, action) => {
+      return state;
+    });
+});

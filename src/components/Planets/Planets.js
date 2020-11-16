@@ -6,7 +6,7 @@ import { selectPlanets } from "../../store/selectors/planets";
 import { useInjectSaga } from "../../store/sagas/useInjectSaga";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../constansts/routes";
-import { getPlanetsDataRequest } from "../../store/reducers/planetsReducer";
+import { getPlanetsDataRequest } from "../../store/actions/planets";
 
 function Planets() {
   useInjectSaga("PlanetsSaga", planetsSaga);
