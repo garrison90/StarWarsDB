@@ -11,10 +11,10 @@ export default function* peopleSaga() {
 
 function* peopleSagaWorker() {
   try {
-    let results = yield call(getAllPeople);
-    yield put(getAllPeopleRequestSuccess(results));
+    let people = yield call(getAllPeople);
+    yield put(getAllPeopleRequestSuccess(people));
   } catch (e) {
-    console.log(e);
     //yield put(getStarshipsFailure());
+  } finally {
   }
 }

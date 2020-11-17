@@ -11,9 +11,8 @@ export default function* personDetailsSaga() {
   yield takeEvery(getPersonDataRequest.type, personDetailsSagaWorker);
 }
 
-function* personDetailsSagaWorker(action) {
+function* personDetailsSagaWorker({ payload }) {
   try {
-    const { payload } = action;
     const person = yield call(getPerson, payload);
     const planetId = person.homeworld.match(idRegExp)[1];
     const [starships, planet] = yield all([

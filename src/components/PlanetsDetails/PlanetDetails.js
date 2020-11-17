@@ -1,22 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ListGroup from "react-bootstrap/esm/ListGroup";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getPlanetDataRequest } from "../../store/actions/planets";
-import planetDetailsSaga from "../../store/sagas/planetDetailsSaga";
-import { useInjectSaga } from "../../store/sagas/useInjectSaga";
-import { selectPlanet } from "../../store/selectors/planets";
+import { useSelector } from "react-redux";
+import usePlanetDetails from "../../hooks/usePlanetDetails";
+import { selectLoadingState } from "../../store/selectors/planets";
 import PlanetResidents from "../PlanetResidents/PlanetResidents";
+import Preloader from "../Preloader/Preloader";
 
 function PlanetDetails() {
-  useInjectSaga("planetDetailsSaga", planetDetailsSaga);
-  const dispatch = useDispatch();
-  const planet = useSelector(selectPlanet);
-  const { id } = useParams();
+  const planet = usePlanetDetails();
+  const loading = useSelector(selectLoadingState);
 
-  useEffect(() => {
-    dispatch(getPlanetDataRequest(id));
-  }, [dispatch, id]);
+  if (loading) return <Preloader />;
 
   return (
     <ListGroup>

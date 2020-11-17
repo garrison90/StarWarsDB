@@ -4,13 +4,12 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
-import configureStore from "./store";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import compileStore from "./store/index";
 
 export const history = createBrowserHistory();
-
-export const store = configureStore({ history });
+export const store = compileStore({ history });
 
 ReactDOM.render(
   <React.StrictMode>

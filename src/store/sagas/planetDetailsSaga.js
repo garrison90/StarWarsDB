@@ -16,7 +16,6 @@ function* planetDetailsSagaWorker(action) {
     let residents = yield call(getPlanetResidenst, planet.residents);
     yield put(getPlanetDataRequestSuccess({ planet, residents }));
   } catch (e) {
-    console.log(e);
     //yield put(getStarshipsFailure());
   }
 }

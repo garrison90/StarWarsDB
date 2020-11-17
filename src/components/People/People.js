@@ -1,8 +1,8 @@
 import React from "react";
 
-function People({ person, reallocatte }) {
+function People({ person, move }) {
   return (
-    <tr onClick={() => reallocatte(person.id)}>
+    <tr onClick={() => move(person.id)}>
       <td>{person.id}</td>
       <td>{person.name}</td>
       <td>{person.birthYear}</td>

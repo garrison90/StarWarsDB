@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useInjectSaga } from "../../store/sagas/useInjectSaga";
-import starshipDetailsSaga from "../../store/sagas/starshipDetailsSaga";
-import { useDispatch, useSelector } from "react-redux";
-import { selectStarship } from "../../store/selectors/starships";
-import { useParams } from "react-router-dom";
 import StarshipPilots from "../StarshipPilots/StarshipPilots";
-import { getStarshipDetailsRequest } from "../../store/reducers/starshipsSlice";
+import Preloader from "../Preloader/Preloader";
+import useStarshipDetails from "../../hooks/useStarshipDetails";
+import { useSelector } from "react-redux";
+import { selectStarshipsLoading } from "../../store/selectors/starships";
 
 function StarshipDetails() {
-  useInjectSaga("starshipDetailsSaga", starshipDetailsSaga);
-  const dispatch = useDispatch();
-  const starship = useSelector(selectStarship);
-  const { id } = useParams();
-
-  useEffect(() => {
-    dispatch(getStarshipDetailsRequest(id));
-  }, [dispatch, id]);
-
+  const starship = useStarshipDetails();
+  const loading = useSelector(selectStarshipsLoading);
+  if (loading) return <Preloader />;
   return (
     <>
       <ListGroup>
@@ -39,6 +31,7 @@ function StarshipDetails() {
           Starship Class: {starship.starshipClass}
         </ListGroup.Item>
       </ListGroup>
+      <h1>Pilots:</h1>
       <StarshipPilots />
     </>
   );

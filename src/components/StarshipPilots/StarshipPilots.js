@@ -4,17 +4,18 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
 import { selectStarshipPilots } from "../../store/selectors/starships";
-import { useHistory } from "react-router-dom";
 import { routes } from "../../constansts/routes";
+import useSwitchTo from "../../hooks/useSwitchTo";
 
 function StarshipPilots() {
   const pilots = useSelector(selectStarshipPilots);
-  const history = useHistory();
+  const moveTo = useSwitchTo();
 
   const { PERSON_DETAILS } = routes;
 
-  const directedAt = (id) => {
-    history.push(PERSON_DETAILS.createPath(id));
+  const move = (id) => {
+    const path = PERSON_DETAILS.createPath(id);
+    moveTo(path);
   };
 
   return (
@@ -27,10 +28,7 @@ function StarshipPilots() {
     >
       {pilots.length
         ? pilots.map((pilot) => (
-            <Dropdown.Item
-              key={pilot.id}
-              onClick={(id) => directedAt(pilot.id)}
-            >
+            <Dropdown.Item key={pilot.id} onClick={() => move(pilot.id)}>
               {pilot.name}
             </Dropdown.Item>
           ))

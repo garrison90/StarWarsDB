@@ -3,24 +3,23 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { routes } from "../../constansts/routes";
+import useSwitchTo from "../../hooks/useSwitchTo";
 import { selectResidents } from "../../store/selectors/planets";
 
 function PlanetResidents() {
   const residents = useSelector(selectResidents);
-  const history = useHistory();
+  const moveTo = useSwitchTo();
   const { PERSON_DETAILS } = routes;
 
-  const reallocate = (id) => {
-    history.push(PERSON_DETAILS.createPath(id));
+  const move = (id) => {
+    const path = PERSON_DETAILS.createPath(id);
+    moveTo(path);
   };
 
   return (
     <>
       {residents.map((resident) => (
-        <ListGroup.Item
-          key={resident.id}
-          onClick={() => reallocate(resident.id)}
-        >
+        <ListGroup.Item key={resident.id} onClick={() => move(resident.id)}>
           {resident.name}
         </ListGroup.Item>
       ))}

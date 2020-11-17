@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "@reduxjs/toolkit";
 import peopleReducer from "./peopleSlice";
 import planetsReducer from "./planetsReducer";
 import starshipsSlice from "./starshipsSlice";

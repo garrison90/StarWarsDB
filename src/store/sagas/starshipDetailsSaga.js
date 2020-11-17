@@ -3,7 +3,6 @@ import {
   getStarship,
   getStarshipPilots,
 } from "../../services/starships-service";
-
 import {
   getStarshipDetailsFailure,
   getStarshipDetailsRequest,

@@ -7,7 +7,7 @@ export const routes = {
     INDEX: "/starships",
     DEFAULT_PATH: "/",
   },
-  STARSHIPS_DETAILS: {
+  STARSHIP_DETAILS: {
     INDEX: "/starships/:id",
     DEFAULT_PATH: "/starships",
     createPath: (id) => ["/starships", id].filter(Boolean).join("/"),

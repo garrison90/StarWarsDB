@@ -12,25 +12,26 @@ const initialState = {
   planets: [],
   planet: {},
   residents: [],
+  loading: true,
 };
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(getPlanetsDataRequest, (state, action) => {
-      return state;
-    })
+    .addCase(getPlanetsDataRequest, (state, action) => {})
     .addCase(getPlanetsDataRequestSuccess, (state, action) => {
       state.planets = action.payload;
+      state.loading = false;
     })
     .addCase(getPlanetsDataRequestFailure, (state, action) => {
       return state;
     })
     .addCase(getPlanetDataRequest, (state, action) => {
-      return state;
+      state.loading = true;
     })
     .addCase(getPlanetDataRequestSuccess, (state, action) => {
       state.planet = action.payload.planet;
       state.residents = action.payload.residents;
+      state.loading = false;
     })
     .addCase(getPlanetDataRequestFailure, (state, action) => {
       return state;

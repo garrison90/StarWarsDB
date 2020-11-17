@@ -1,8 +1,7 @@
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers/rootReducer";
 import rootSaga from "./sagas/rootSaga";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 function createSagaInjector(runSaga, rootSaga) {
   const injectedSagas = new Map();
@@ -25,14 +24,21 @@ function createSagaInjector(runSaga, rootSaga) {
   return { injectSaga, ejectSaga };
 }
 
-export default function configureStore({ history }) {
+export default function compileStore({ history }) {
   const sagaMiddleware = createSagaMiddleware({ context: { history } });
 
-  const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(sagaMiddleware))
-  );
-  Object.assign(store, createSagaInjector(sagaMiddleware.run, rootSaga));
+  const middleware = [
+    ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
+    sagaMiddleware,
+  ];
 
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware,
+    devTools:
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
+  });
+  Object.assign(store, createSagaInjector(sagaMiddleware.run, rootSaga));
   return store;
 }

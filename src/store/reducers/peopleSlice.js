@@ -7,18 +7,25 @@ const peopleSlice = createSlice({
     selectedPerson: {},
     personHomeworld: {},
     personStarships: [],
+    loading: true,
   },
   reducers: {
-    getAllPeopleRequest(state, action) {},
+    getAllPeopleRequest(state, action) {
+      state.loading = true;
+    },
     getAllPeopleRequestSuccess(state, action) {
       state.people = action.payload;
+      state.loading = false;
     },
     getAllPeopleRequestFailure(state, action) {},
-    getPersonDataRequest(state, action) {},
+    getPersonDataRequest(state, action) {
+      state.loading = true;
+    },
     getPersonDataRequestSuccess(state, action) {
       state.selectedPerson = action.payload.person;
       state.personHomeworld = action.payload.planet;
       state.personStarships = action.payload.starships;
+      state.loading = false;
     },
     getPersonDataRequestFailure(state, action) {},
   },

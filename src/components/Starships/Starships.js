@@ -1,32 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import { getStarshipsRequest } from "../../store/reducers/starshipsSlice";
-import starshipsSaga from "../../store/sagas/starshipsSaga";
-import { useInjectSaga } from "../../store/sagas/useInjectSaga";
-import { selectStarships } from "../../store/selectors/starships";
 import SearchForm from "../SearchForm/SearchForm";
+import useStarships from "../../hooks/useStarships";
+import { routes } from "../../constansts/routes";
+import { selectStarshipsLoading } from "../../store/selectors/starships";
+import useLoading from "../../hooks/useLoading";
+import useSwitchTo from "../../hooks/useSwitchTo";
 
 function Starships() {
-  useInjectSaga("starshipsSaga", starshipsSaga);
-  const dispatch = useDispatch();
-  const starships = useSelector(selectStarships);
-  const history = useHistory();
-  const location = useLocation();
-  const { pathname } = location;
+  const moveTo = useSwitchTo();
+  const starships = useStarships();
+  const { STARSHIP_DETAILS } = routes;
+  const loading = useLoading(selectStarshipsLoading);
 
-  useEffect(() => {
-    dispatch(getStarshipsRequest());
-  }, [dispatch]);
-
-  const directedAt = (id) => {
-    history.push(pathname + `/${id}`);
+  const move = (id) => {
+    const path = STARSHIP_DETAILS.createPath(id);
+    moveTo(path);
   };
 
   return (
     <>
       <SearchForm />
+      {loading}
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -39,7 +34,7 @@ function Starships() {
         </thead>
         <tbody>
           {starships.map((starship) => (
-            <tr key={starship.id} onClick={(id) => directedAt(starship.id)}>
+            <tr key={starship.id} onClick={() => move(starship.id)}>
               <td>{starship.id}</td>
               <td>{starship.name}</td>
               <td>{starship.model}</td>
