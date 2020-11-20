@@ -1,20 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  starships: [],
+  starship: {},
+  pilots: [],
+  query: "",
+  loading: true,
+  error: false,
+  hasMore: null,
+  pageNumber: 1,
+};
+
 const starshipsSlice = createSlice({
   name: "starships",
-  initialState: {
-    starships: [],
-    starship: {},
-    pilots: [],
-    search: "",
-    loading: true,
-  },
+  initialState,
   reducers: {
     getStarshipsRequest(state, action) {
       state.loading = true;
+      state.error = false;
     },
-    getStarshipsSuccess(state, action) {
-      state.starships = action.payload.starships;
+    getStarshipsSuccess(state, { payload }) {
+      state.starships = [...state.starships, ...payload.starships];
+      state.hasMore = payload.next !== null;
       state.loading = false;
     },
     getStarshipsFailure(state, action) {},
@@ -27,12 +34,16 @@ const starshipsSlice = createSlice({
       state.loading = false;
     },
     getStarshipDetailsFailure(state, action) {},
-    getSearchInputValue(state, action) {
-      state.search = action.payload;
+
+    setPageNumber(state, action) {
+      state.pageNumber = action.payload;
     },
-    setSearchValueFromUrl(state, action) {
-      state.search = action.payload;
+    setQuery(state, action) {
+      state.query = action.payload;
+      state.pageNumber = 1;
+      state.starships = [];
     },
+    clearStarships: () => initialState,
   },
 });
 
@@ -43,7 +54,8 @@ export const {
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   getStarshipDetailsFailure,
-  getSearchInputValue,
-  setSearchValueFromUrl,
+  setPageNumber,
+  setQuery,
+  clearStarships,
 } = starshipsSlice.actions;
 export default starshipsSlice.reducer;

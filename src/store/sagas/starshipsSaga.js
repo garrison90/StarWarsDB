@@ -1,35 +1,24 @@
-import { call, getContext, put, select, takeEvery } from "redux-saga/effects";
-import { selectQueryParams } from "../selectors/starships";
+import { call, put, select, takeEvery } from "redux-saga/effects";
+import { getAllStarships } from "../../services/starships-service";
 import {
   getStarshipsRequest,
-  getStarshipsFailure,
   getStarshipsSuccess,
-  getSearchInputValue,
-  setSearchValueFromUrl,
 } from "../reducers/starshipsSlice";
-import { getAllStarships } from "../../services/starships-service";
+import { selectPage, selectQuery } from "../selectors/starships";
 
-export default function* starshipsSaga() {
-  yield takeEvery(
-    [getStarshipsRequest.type, getSearchInputValue.type],
-    starshipsSagaWorker
-  );
-  const history = yield getContext("history");
-  const query = history.location.search;
-  yield put(setSearchValueFromUrl(query.substr(8)));
+export default function* anotherStarshipsSaga() {
+  yield takeEvery(getStarshipsRequest.type, starshipsSagaWorker);
 }
 
 function* starshipsSagaWorker() {
   try {
-    const query = yield select(selectQueryParams);
-    const history = yield getContext("history");
-    yield call(history.push, {
-      pathname: "/starships",
-      search: query,
-    });
-    const starships = yield call(getAllStarships, query);
-    yield put(getStarshipsSuccess(starships));
+    const query = yield select(selectQuery);
+    const pageNumber = yield select(selectPage);
+    const response = yield call(getAllStarships, [query, pageNumber]);
+    const { starships, next } = response;
+    yield put(getStarshipsSuccess({ starships, next }));
   } catch (e) {
-    yield put(getStarshipsFailure());
+    console.log(e);
+    //yield put(getStarshipsFailure());
   }
 }

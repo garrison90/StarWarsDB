@@ -4,11 +4,11 @@ import StarshipPilots from "../StarshipPilots/StarshipPilots";
 import Preloader from "../Preloader/Preloader";
 import useStarshipDetails from "../../hooks/useStarshipDetails";
 import { useSelector } from "react-redux";
-import { selectStarshipsLoading } from "../../store/selectors/starships";
+import { selectLoading } from "../../store/selectors/starships";
 
 function StarshipDetails() {
   const starship = useStarshipDetails();
-  const loading = useSelector(selectStarshipsLoading);
+  const loading = useSelector(selectLoading);
   if (loading) return <Preloader />;
   return (
     <>

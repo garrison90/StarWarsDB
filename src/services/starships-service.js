@@ -1,13 +1,13 @@
 import { transformPerson, transformStarship } from "../helpers/helpers";
 import { httpClient } from "./api";
 
-export const getAllStarships = async (query = "") => {
-  const response = await httpClient.get(`starships${query}`);
+export const getAllStarships = async ([query, pageNumber]) => {
+  const params = { search: query, page: pageNumber };
+  const response = await httpClient.get(`starships`, { params });
   const starshipData = response.data.results;
   let starships = starshipData.map(transformStarship);
   return {
     next: response.data.next,
-    count: response.data.count,
     starships: starships,
   };
 };

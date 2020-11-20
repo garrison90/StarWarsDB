@@ -1,20 +1,37 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getStarshipsRequest } from "../store/reducers/starshipsSlice";
-import starshipsSaga from "../store/sagas/starshipsSaga";
-import { useInjectSaga } from "../store/sagas/useInjectSaga";
-import { selectStarships } from "../store/selectors/starships";
+import {
+  clearStarships,
+  getStarshipsRequest,
+} from "../store/reducers/starshipsSlice";
+import {
+  selectError,
+  selectHasMore,
+  selectLoading,
+  selectStarships,
+} from "../store/selectors/starships";
 
-function useStarships() {
-  useInjectSaga("starshipsSaga", starshipsSaga);
-  const dispatch = useDispatch();
+function useAnotherStarships(query, pageNumber) {
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
   const starships = useSelector(selectStarships);
+  const hasMore = useSelector(selectHasMore);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getStarshipsRequest());
+    dispatch(getStarshipsRequest({ query, pageNumber }));
+  }, [dispatch, query, pageNumber]);
+
+  useEffect(() => {
+    return () => dispatch(clearStarships());
   }, [dispatch]);
 
-  return useMemo(() => starships, [starships]);
+  return useMemo(() => ({ starships, hasMore, loading, error }), [
+    starships,
+    hasMore,
+    loading,
+    error,
+  ]);
 }
 
-export default useStarships;
+export default useAnotherStarships;
