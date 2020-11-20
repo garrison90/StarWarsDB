@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
   getAllPeopleRequest,
+  getAllPeopleRequestFailure,
   getAllPeopleRequestSuccess,
 } from "../reducers/peopleSlice";
 import { getAllPeople } from "../../services/people-service";
@@ -14,7 +15,6 @@ function* peopleSagaWorker() {
     let people = yield call(getAllPeople);
     yield put(getAllPeopleRequestSuccess(people));
   } catch (e) {
-    //yield put(getStarshipsFailure());
-  } finally {
+    yield put(getAllPeopleRequestFailure());
   }
 }

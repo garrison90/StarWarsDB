@@ -1,4 +1,5 @@
 export const idRegExp = /\/([0-9]*)\/$/;
+//export const pageNumberRegExp = /([0-9]*)$/;
 
 export const extractId = (item) => {
   return item.url.match(idRegExp)[1];

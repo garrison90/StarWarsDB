@@ -3,8 +3,13 @@ import { httpClient } from "./api";
 
 export const getAllStarships = async (query = "") => {
   const response = await httpClient.get(`starships${query}`);
-  const starships = response.data.results;
-  return starships.map(transformStarship);
+  const starshipData = response.data.results;
+  let starships = starshipData.map(transformStarship);
+  return {
+    next: response.data.next,
+    count: response.data.count,
+    starships: starships,
+  };
 };
 
 export const getStarship = async (id) => {

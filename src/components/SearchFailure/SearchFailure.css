@@ -1,0 +1,29 @@
+.failure-indicator {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #c78f22;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.failure-indicator img {
+  margin-bottom: 1rem;
+}
+
+.failure-indicator .boom {
+  font-size: 1.7rem;
+}
+/*# sourceMappingURL=SearchFailure.css.map */

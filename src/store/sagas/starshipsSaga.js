@@ -23,7 +23,7 @@ function* starshipsSagaWorker() {
   try {
     const query = yield select(selectQueryParams);
     const history = yield getContext("history");
-    history.push({
+    yield call(history.push, {
       pathname: "/starships",
       search: query,
     });

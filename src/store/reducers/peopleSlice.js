@@ -8,6 +8,7 @@ const peopleSlice = createSlice({
     personHomeworld: {},
     personStarships: [],
     loading: true,
+    error: false,
   },
   reducers: {
     getAllPeopleRequest(state, action) {
@@ -17,7 +18,9 @@ const peopleSlice = createSlice({
       state.people = action.payload;
       state.loading = false;
     },
-    getAllPeopleRequestFailure(state, action) {},
+    getAllPeopleRequestFailure(state, action) {
+      state.error = true;
+    },
     getPersonDataRequest(state, action) {
       state.loading = true;
     },

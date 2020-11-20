@@ -14,7 +14,7 @@ const starshipsSlice = createSlice({
       state.loading = true;
     },
     getStarshipsSuccess(state, action) {
-      state.starships = action.payload;
+      state.starships = action.payload.starships;
       state.loading = false;
     },
     getStarshipsFailure(state, action) {},
