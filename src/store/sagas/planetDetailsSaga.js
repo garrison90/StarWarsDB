@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
-import { getPlanet, getPlanetResidenst } from "../../services/planets-service";
+import { getPlanet, getPlanetResidents } from "../../services/planets-service";
 import {
   getPlanetDataRequest,
   getPlanetDataRequestFailure,
@@ -7,15 +7,16 @@ import {
 } from "../actions/planets";
 import { selectPlanetId } from "../selectors/planets";
 
-export default function* planetDetailsSaga() {
+export function* planetDetailsSaga() {
   yield takeEvery(getPlanetDataRequest.toString(), planetDetailsSagaWorker);
 }
 
-function* planetDetailsSagaWorker() {
+export function* planetDetailsSagaWorker() {
   try {
     const id = yield select(selectPlanetId);
     let planet = yield call(getPlanet, id);
-    let residents = yield call(getPlanetResidenst, planet.residents);
+    let residents = yield call(getPlanetResidents, planet.residents);
+    console.log(residents);
     yield put(getPlanetDataRequestSuccess({ planet, residents }));
   } catch (e) {
     yield put(getPlanetDataRequestFailure());

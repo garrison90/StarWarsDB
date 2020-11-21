@@ -13,7 +13,7 @@ export const getPlanet = async (id) => {
   return transformPlanet(planet);
 };
 
-export const getPlanetResidenst = async (urls) => {
+export const getPlanetResidents = async (urls) => {
   let requests = await urls.map((url) => httpClient.get(url));
   let response = await Promise.all(requests);
   let residents = response.map(({ data }) => transformPerson(data));

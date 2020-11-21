@@ -1,8 +1,8 @@
 import { all, fork } from "redux-saga/effects";
 import peopleSaga from "./peopleSaga";
 import personDetailsSaga from "./personDetailsSaga";
-import planetDetailsSaga from "./planetDetailsSaga";
-import planetsSaga from "./planetsSaga";
+import { planetDetailsSaga } from "./planetDetailsSaga";
+import { planetsSaga } from "./planetsSaga";
 import starshipDetailsSaga from "./starshipDetailsSaga";
 import starshipsSaga from "./starshipsSaga";
 
