@@ -9,6 +9,7 @@ const peopleSlice = createSlice({
     personStarships: [],
     loading: true,
     error: false,
+    id: "",
   },
   reducers: {
     getAllPeopleRequest(state, action) {
@@ -23,6 +24,7 @@ const peopleSlice = createSlice({
     },
     getPersonDataRequest(state, action) {
       state.loading = true;
+      state.id = action.payload;
     },
     getPersonDataRequestSuccess(state, action) {
       state.selectedPerson = action.payload.person;

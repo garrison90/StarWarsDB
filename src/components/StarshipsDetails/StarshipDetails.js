@@ -1,15 +1,12 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import StarshipPilots from "../StarshipPilots/StarshipPilots";
-import Preloader from "../Preloader/Preloader";
-import useStarshipDetails from "../../hooks/useStarshipDetails";
-import { useSelector } from "react-redux";
-import { selectLoading } from "../../store/selectors/starships";
+import DropdownButton from "react-bootstrap/esm/DropdownButton";
+import InputGroupWithExtras from "react-bootstrap/esm/InputGroup";
+import Dropdown from "react-bootstrap/esm/Dropdown";
 
-function StarshipDetails() {
-  const starship = useStarshipDetails();
-  const loading = useSelector(selectLoading);
-  if (loading) return <Preloader />;
+function StarshipDetails({ starship, loading, move, pilots, error }) {
+  if (loading) return loading;
+  if (error) return error;
   return (
     <>
       <ListGroup>
@@ -32,7 +29,21 @@ function StarshipDetails() {
         </ListGroup.Item>
       </ListGroup>
       <h1>Pilots:</h1>
-      <StarshipPilots />
+      <DropdownButton
+        as={InputGroupWithExtras.Prepend}
+        variant="outline-secondary"
+        title={!pilots.length ? "This spaship doesn't have pilots" : "Pilots"}
+        id="input-group-dropdown-1"
+        className="w-25"
+      >
+        {pilots.length
+          ? pilots.map((pilot) => (
+              <Dropdown.Item key={pilot.id} onClick={() => move(pilot.id)}>
+                {pilot.name}
+              </Dropdown.Item>
+            ))
+          : null}
+      </DropdownButton>
     </>
   );
 }

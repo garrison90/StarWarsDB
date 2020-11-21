@@ -1,49 +1,36 @@
-import React from "react";
-import Table from "react-bootstrap/esm/Table";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import People from "../components/People/People";
 import { routes } from "../constansts/routes";
 import useError from "../hooks/useError";
 import useLoading from "../hooks/useLoading";
-import usePeople from "../hooks/usePeople";
 import useSwitchTo from "../hooks/useSwitchTo";
+import { getAllPeopleRequest } from "../store/reducers/peopleSlice";
 import {
+  selectAllPeople,
   selectPeopleError,
   selectPeopleLoading,
 } from "../store/selectors/people";
 
 export default function PeopleContainer() {
-  const people = usePeople();
   const moveTo = useSwitchTo();
   const { PERSON_DETAILS } = routes;
   const loading = useLoading(selectPeopleLoading);
   const error = useError(selectPeopleError);
+  const people = useSelector(selectAllPeople);
+  const dispatch = useDispatch();
 
   const move = (id) => {
     let path = PERSON_DETAILS.createPath(id);
     moveTo(path);
   };
 
+  useEffect(() => {
+    dispatch(getAllPeopleRequest());
+  }, [dispatch]);
+
   if (error) return error;
   if (loading) return loading;
 
-  return (
-    <>
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Birthday Year</th>
-            <th>Eye Color</th>
-            <th>Genger</th>
-          </tr>
-        </thead>
-        <tbody>
-          {people.map((person) => (
-            <People person={person} key={person.id} move={move} />
-          ))}
-        </tbody>
-      </Table>
-    </>
-  );
+  return <People people={people} move={move} />;
 }

@@ -9,6 +9,7 @@ const initialState = {
   error: false,
   hasMore: null,
   pageNumber: 1,
+  id: "",
 };
 
 const starshipsSlice = createSlice({
@@ -24,19 +25,26 @@ const starshipsSlice = createSlice({
       state.hasMore = payload.next !== null;
       state.loading = false;
     },
-    getStarshipsFailure(state, action) {},
+    getStarshipsFailure(state, action) {
+      state.loading = false;
+      state.error = true;
+    },
     getStarshipDetailsRequest(state, action) {
       state.loading = true;
+      state.id = action.payload;
+      state.error = false;
     },
     getStarshipDetailsSuccess(state, action) {
       state.starship = action.payload.starship;
       state.pilots = action.payload.pilots;
       state.loading = false;
     },
-    getStarshipDetailsFailure(state, action) {},
-
+    getStarshipDetailsFailure(state, action) {
+      state.loading = false;
+      state.error = true;
+    },
     setPageNumber(state, action) {
-      state.pageNumber = action.payload;
+      state.pageNumber += 1;
     },
     setQuery(state, action) {
       state.query = action.payload;

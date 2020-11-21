@@ -13,20 +13,28 @@ const initialState = {
   planet: {},
   residents: [],
   loading: true,
+  id: "",
+  error: false,
 };
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(getPlanetsDataRequest, (state, action) => {})
+    .addCase(getPlanetsDataRequest, (state, action) => {
+      state.loading = true;
+      state.error = false;
+    })
     .addCase(getPlanetsDataRequestSuccess, (state, action) => {
       state.planets = action.payload;
       state.loading = false;
     })
     .addCase(getPlanetsDataRequestFailure, (state, action) => {
-      return state;
+      state.loading = false;
+      state.error = true;
     })
     .addCase(getPlanetDataRequest, (state, action) => {
+      state.error = false;
       state.loading = true;
+      state.id = action.payload;
     })
     .addCase(getPlanetDataRequestSuccess, (state, action) => {
       state.planet = action.payload.planet;
@@ -34,6 +42,7 @@ export default createReducer(initialState, (builder) => {
       state.loading = false;
     })
     .addCase(getPlanetDataRequestFailure, (state, action) => {
-      return state;
+      state.error = false;
+      state.loading = false;
     });
 });

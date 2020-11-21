@@ -3,19 +3,21 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { routes } from "./constansts/routes";
 import { lazy, Suspense } from "react";
 
-const PersonDetails = lazy(() =>
-  import("./components/PersonDetails/PersonDetails")
+const PersonDetailsContainer = lazy(() =>
+  import("./containers/PersonDetailsContainer")
 );
 
 const PeopleContainer = lazy(() => import("./containers/PeopleContainer"));
-const PlanetDetails = lazy(() =>
-  import("./components/PlanetsDetails/PlanetDetails")
+const PlanetDetailsContainer = lazy(() =>
+  import("./containers/PlanetDetailsContainer")
 );
-const Starships = lazy(() => import("./components/Starships/Starships"));
-const StarshipDetails = lazy(() =>
-  import("./components/StarshipsDetails/StarshipDetails")
+const StarshipsContainer = lazy(() =>
+  import("./containers/StarshipsContainer")
 );
-const Planets = lazy(() => import("./components/Planets/Planets"));
+const StarshipDetailsContainer = lazy(() =>
+  import("./containers/StarshipsDetailsContainer")
+);
+const PlanetsContainer = lazy(() => import("./containers/PlanetsContainer"));
 const Home = lazy(() => import("./components/Home/Home"));
 function App() {
   const {
@@ -34,12 +36,21 @@ function App() {
       <Suspense fallback={null}>
         <Switch>
           <Route exact path={HOME.INDEX} component={Home} />
-          <Route exact path={STARSHIPS.INDEX} component={Starships} />
-          <Route path={STARSHIP_DETAILS.INDEX} component={StarshipDetails} />
+          <Route exact path={STARSHIPS.INDEX} component={StarshipsContainer} />
+          <Route
+            path={STARSHIP_DETAILS.INDEX}
+            component={StarshipDetailsContainer}
+          />
           <Route exact path={PEOPLE.INDEX} component={PeopleContainer} />
-          <Route path={PERSON_DETAILS.INDEX} component={PersonDetails} />
-          <Route exact path={PLANETS.INDEX} component={Planets} />
-          <Route path={PLANET_DETAILS.INDEX} component={PlanetDetails} />
+          <Route
+            path={PERSON_DETAILS.INDEX}
+            component={PersonDetailsContainer}
+          />
+          <Route exact path={PLANETS.INDEX} component={PlanetsContainer} />
+          <Route
+            path={PLANET_DETAILS.INDEX}
+            component={PlanetDetailsContainer}
+          />
           <Redirect path="*" to={HOME.INDEX} />
         </Switch>
       </Suspense>

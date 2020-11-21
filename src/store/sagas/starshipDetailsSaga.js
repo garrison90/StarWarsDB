@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
   getStarship,
   getStarshipPilots,
@@ -8,15 +8,16 @@ import {
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
 } from "../reducers/starshipsSlice";
+import { selectStarshipId } from "../selectors/starships";
 
 export default function* starshipDetailsSaga() {
   yield takeEvery(getStarshipDetailsRequest.type, starshipDetailsSagaWorker);
 }
 
-function* starshipDetailsSagaWorker(action) {
+function* starshipDetailsSagaWorker() {
   try {
-    const { payload } = action;
-    const starship = yield call(getStarship, payload);
+    const id = yield select(selectStarshipId);
+    const starship = yield call(getStarship, id);
     const pilots = yield call(getStarshipPilots, starship.pilots);
     yield put(getStarshipDetailsSuccess({ starship, pilots }));
   } catch (e) {
