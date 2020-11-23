@@ -16,7 +16,6 @@ export function* planetDetailsSagaWorker() {
     const id = yield select(selectPlanetId);
     let planet = yield call(getPlanet, id);
     let residents = yield call(getPlanetResidents, planet.residents);
-    console.log(residents);
     yield put(getPlanetDataRequestSuccess({ planet, residents }));
   } catch (e) {
     yield put(getPlanetDataRequestFailure());

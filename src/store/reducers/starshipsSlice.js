@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
   starships: [],
   starship: {},
   pilots: [],
@@ -20,9 +20,9 @@ const starshipsSlice = createSlice({
       state.loading = true;
       state.error = false;
     },
-    getStarshipsSuccess(state, { payload }) {
-      state.starships = [...state.starships, ...payload.starships];
-      state.hasMore = payload.next !== null;
+    getStarshipsSuccess(state, action) {
+      state.starships = [...state.starships, ...action.payload.starships];
+      state.hasMore = action.payload.next !== null;
       state.loading = false;
     },
     getStarshipsFailure(state, action) {

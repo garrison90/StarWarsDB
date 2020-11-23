@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const initialState = {
+  people: [],
+  selectedPerson: {},
+  personHomeworld: {},
+  personStarships: [],
+  loading: true,
+  error: false,
+  id: "",
+};
+
 const peopleSlice = createSlice({
   name: "people",
-  initialState: {
-    people: [],
-    selectedPerson: {},
-    personHomeworld: {},
-    personStarships: [],
-    loading: true,
-    error: false,
-    id: "",
-  },
+  initialState,
   reducers: {
     getAllPeopleRequest(state, action) {
       state.loading = true;
+      state.error = false;
     },
     getAllPeopleRequestSuccess(state, action) {
       state.people = action.payload;
@@ -21,10 +24,12 @@ const peopleSlice = createSlice({
     },
     getAllPeopleRequestFailure(state, action) {
       state.error = true;
+      state.loading = false;
     },
     getPersonDataRequest(state, action) {
       state.loading = true;
       state.id = action.payload;
+      state.error = false;
     },
     getPersonDataRequestSuccess(state, action) {
       state.selectedPerson = action.payload.person;
@@ -32,7 +37,10 @@ const peopleSlice = createSlice({
       state.personStarships = action.payload.starships;
       state.loading = false;
     },
-    getPersonDataRequestFailure(state, action) {},
+    getPersonDataRequestFailure(state, action) {
+      state.loading = false;
+      state.error = true;
+    },
   },
 });
 

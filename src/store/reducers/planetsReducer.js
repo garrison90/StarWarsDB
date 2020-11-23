@@ -8,7 +8,7 @@ import {
   getPlanetsDataRequestSuccess,
 } from "../actions/planets";
 
-const initialState = {
+export const initialState = {
   planets: [],
   planet: {},
   residents: [],
@@ -42,7 +42,7 @@ export default createReducer(initialState, (builder) => {
       state.loading = false;
     })
     .addCase(getPlanetDataRequestFailure, (state, action) => {
-      state.error = false;
+      state.error = true;
       state.loading = false;
     });
 });
