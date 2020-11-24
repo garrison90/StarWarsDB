@@ -1,7 +1,7 @@
-import { transformPerson, transformStarship } from "../helpers/helpers";
+import { transformStarship } from "../helpers/helpers";
 import { httpClient } from "./api";
 
-export const getAllStarships = async ([query, pageNumber]) => {
+const getAllStarships = async ([query, pageNumber]) => {
   const params = { search: query, page: pageNumber };
   const response = await httpClient.get(`starships`, { params });
   const starshipData = response.data.results;
@@ -12,14 +12,10 @@ export const getAllStarships = async ([query, pageNumber]) => {
   };
 };
 
-export const getStarship = async (id) => {
+const getStarship = async (id) => {
   const response = await httpClient.get(`/starships/${id}/`);
   const starship = response.data;
   return transformStarship(starship);
 };
 
-export const getStarshipPilots = async (pilots) => {
-  let requests = await pilots.map((pilot) => httpClient.get(pilot));
-  let response = await Promise.all(requests);
-  return response.map(({ data }) => transformPerson(data));
-};
+export { getAllStarships, getStarship };

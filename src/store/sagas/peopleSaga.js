@@ -10,7 +10,7 @@ export default function* peopleSaga() {
   yield takeEvery(getAllPeopleRequest.type, peopleSagaWorker);
 }
 
-function* peopleSagaWorker() {
+export function* peopleSagaWorker() {
   try {
     let people = yield call(getAllPeople);
     yield put(getAllPeopleRequestSuccess(people));

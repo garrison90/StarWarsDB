@@ -6,7 +6,7 @@ import {
   getPlanetsDataRequestSuccess,
 } from "../actions/planets";
 
-export function* planetsSaga() {
+export default function* planetsSaga() {
   yield takeEvery(getPlanetsDataRequest.toString(), planetsSagaWorker);
 }
 
