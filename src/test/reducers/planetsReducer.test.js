@@ -1,21 +1,20 @@
-const {
+import {
   getPlanetsDataRequest,
   getPlanetsDataRequestSuccess,
   getPlanetsDataRequestFailure,
   getPlanetDataRequest,
   getPlanetDataRequestSuccess,
   getPlanetDataRequestFailure,
-} = require("../../store/actions/planets");
-const {
-  default: planetsReducer,
+  getPlanetResidentsRequest,
+  getPlanetResidentsSuccess,
+  getPlanetResidentsFailure,
+} from "../../store/actions/planets";
+import planetsReducer, {
   initialState,
-} = require("../../store/reducers/planetsReducer");
+} from "../../store/reducers/planetsReducer";
+import { fakePeopleData, fakePlanet, fakePlanets } from "../helpers/mockData";
 
 describe("test planets reducer", () => {
-  it("should return initial state", () => {
-    expect(planetsReducer(undefined, {})).toEqual(initialState);
-  });
-
   it("get planets data request", () => {
     expect(planetsReducer(initialState, getPlanetsDataRequest)).toEqual({
       ...initialState,
@@ -25,23 +24,20 @@ describe("test planets reducer", () => {
   });
 
   it("get planets data request success", () => {
-    const mockPlanets = [
-      { name: "Tatooine" },
-      { name: "Dagobah" },
-      { name: "Bespin" },
-    ];
-
     const newState = planetsReducer(
       initialState,
-      getPlanetsDataRequestSuccess(mockPlanets)
+      getPlanetsDataRequestSuccess(fakePlanets)
     );
 
     expect(newState.loading).toBeFalsy();
-    expect(newState.planets).toEqual(mockPlanets);
+    expect(newState.planets).toEqual(fakePlanets);
   });
 
   it("get planets data request error", () => {
-    const newState = planetsReducer(initialState, getPlanetsDataRequestFailure);
+    const newState = planetsReducer(
+      initialState,
+      getPlanetsDataRequestFailure()
+    );
     expect(newState.loading).toBeFalsy();
     expect(newState.error).toBe(true);
   });
@@ -55,30 +51,42 @@ describe("test planets reducer", () => {
   });
 
   it("get planet details request success", () => {
-    const mockPlanet = { name: "Dagobah", id: 4, residents: [] };
-    const mockResidents = [
-      { name: "Luke Skywalker", id: 1 },
-      { name: "C-3PO", id: 2 },
-      { name: "R2-D2", id: 3 },
-    ];
-
-    /*  const mockPayload = {
-      planet: mockPlanet,
-      residents: mockResidents,
-    };
- */
     const newState = planetsReducer(
       initialState,
-      getPlanetDataRequestSuccess(mockPlanet)
+      getPlanetDataRequestSuccess(fakePlanet)
     );
 
-    expect(newState.planet).toEqual(mockPlanet);
-    //expect(newState.residents).toEqual(mockResidents);
+    expect(newState.planet).toEqual(fakePlanet);
     expect(newState.loading).toBeFalsy();
   });
 
   it("get planet details request error", () => {
-    const newState = planetsReducer(initialState, getPlanetDataRequestFailure);
+    const newState = planetsReducer(
+      initialState,
+      getPlanetDataRequestFailure()
+    );
+    expect(newState.loading).toBeFalsy();
+    expect(newState.error).toBe(true);
+  });
+
+  it("get planet residents request", () => {
+    const newState = planetsReducer(initialState, getPlanetResidentsRequest());
+    expect(newState.loading).toBeTruthy();
+    expect(newState.error).toBeFalsy();
+  });
+
+  it("get planet residents success", () => {
+    const newState = planetsReducer(
+      initialState,
+      getPlanetResidentsSuccess(fakePeopleData)
+    );
+
+    expect(newState.residents).toEqual(fakePeopleData);
+    expect(newState.loading).toBeFalsy();
+  });
+
+  it("get planet residents failure", () => {
+    const newState = planetsReducer(initialState, getPlanetResidentsFailure());
     expect(newState.loading).toBeFalsy();
     expect(newState.error).toBe(true);
   });

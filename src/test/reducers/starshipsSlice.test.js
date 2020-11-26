@@ -12,104 +12,14 @@ import {
   getStarshipsSuccess,
   getStarshipsFailure,
 } from "../../store/reducers/starshipsSlice";
+import {
+  fakeId,
+  fakePayload,
+  fakeStarship,
+  fakeStarships,
+} from "../helpers/mockData";
 
 describe("test starships slice", () => {
-  const mockStarships = [
-    {
-      name: "CR90 corvette",
-      pilots: [],
-      id: 1,
-    },
-    {
-      name: "Sentinel-class landing craft",
-      id: 2,
-      pilots: [],
-    },
-    {
-      name: "Millennium Falcon",
-      id: 3,
-      pilots: [
-        {
-          name: "Luke Skywalker",
-          homeworld: "Tatooine",
-          starships: ["X-wing", "Imperial shuttle"],
-          id: 1,
-        },
-        {
-          name: "R2-D2",
-          homeworld: "Naboo",
-          starships: [],
-          id: 2,
-        },
-      ],
-    },
-  ];
-
-  const mockStarship = {
-    name: "Millennium Falcon",
-    id: 3,
-    pilots: [
-      {
-        name: "Luke Skywalker",
-        homeworld: "Tatooine",
-        starships: ["X-wing", "Imperial shuttle"],
-        id: 1,
-      },
-      {
-        name: "R2-D2",
-        homeworld: "Naboo",
-        starships: [],
-        id: 2,
-      },
-    ],
-  };
-
-  const mockMoreStarshipsData = [
-    {
-      name: "X-wing",
-      pilots: [],
-      id: 4,
-    },
-    {
-      name: "TIE Advanced x1",
-      id: 5,
-      pilots: [],
-    },
-    {
-      name: "Executor",
-      id: 6,
-      pilots: [
-        {
-          name: "Luke Skywalker",
-          homeworld: "Tatooine",
-          starships: ["X-wing", "Imperial shuttle"],
-          id: 1,
-        },
-        {
-          name: "R2-D2",
-          homeworld: "Naboo",
-          starships: [],
-          id: 2,
-        },
-      ],
-    },
-  ];
-
-  const mockHasMoreProperty = true;
-  const mockHasMoreAnotherProperty = null;
-  const mockQuery = "h";
-  const checkStarshipsDataOnServer = {
-    starships: mockMoreStarshipsData,
-    next: mockHasMoreAnotherProperty,
-  };
-
-  const mockStarshipsDataPayload = {
-    starships: mockStarships,
-    next: mockHasMoreProperty,
-  };
-
-  const mockId = 23;
-
   it("get starships data request", () => {
     const newState = starshipsSlice(initialState, getStarshipsRequest());
     expect(newState.error).toBeFalsy();
@@ -119,28 +29,25 @@ describe("test starships slice", () => {
   it("get starships data request success", () => {
     const newState = starshipsSlice(
       initialState,
-      getStarshipsSuccess(mockStarshipsDataPayload)
+      getStarshipsSuccess(fakePayload)
     );
-    expect(newState.starships).toEqual(mockStarships);
-    expect(newState.hasMore).toBe(mockHasMoreProperty);
+    expect(newState.starships).toEqual(fakeStarships);
+    expect(newState.hasMore).toBe(true);
     expect(newState.loading).toBeFalsy();
   });
 
   it("if there any more data on the server", () => {
     const state = starshipsSlice(
       initialState,
-      getStarshipsSuccess(mockStarshipsDataPayload)
+      getStarshipsSuccess({ starships: fakeStarships, next: true })
     );
 
     const newState = starshipsSlice(
       state,
-      getStarshipsSuccess(checkStarshipsDataOnServer)
+      getStarshipsSuccess({ starships: fakeStarships, next: null })
     );
 
-    expect(newState.starships).toEqual([
-      ...mockStarships,
-      ...mockMoreStarshipsData,
-    ]);
+    expect(newState.starships).toEqual([...fakeStarships, ...fakeStarships]);
     expect(newState.hasMore).toBeFalsy();
     expect(newState.loading).toBeFalsy();
   });
@@ -154,9 +61,9 @@ describe("test starships slice", () => {
   it("get starship details data request", () => {
     const newState = starshipsSlice(
       initialState,
-      getStarshipDetailsRequest(mockId)
+      getStarshipDetailsRequest(fakeId)
     );
-    expect(newState.id).toBe(mockId);
+    expect(newState.id).toBe(fakeId);
     expect(newState.loading).toBeTruthy();
     expect(newState.error).toBeFalsy();
   });
@@ -164,11 +71,11 @@ describe("test starships slice", () => {
   it("get starship details data request success", () => {
     const newState = starshipsSlice(
       initialState,
-      getStarshipDetailsSuccess(mockStarship)
+      getStarshipDetailsSuccess(fakeStarship)
     );
 
     expect(newState.loading).toBeFalsy();
-    expect(newState.starship).toEqual(mockStarship);
+    expect(newState.starship).toEqual(fakeStarship);
   });
 
   it("get starship details request failure", () => {
@@ -183,10 +90,10 @@ describe("test starships slice", () => {
   });
 
   it("set value from input field", () => {
-    const newState = starshipsSlice(initialState, setQuery(mockQuery));
+    const newState = starshipsSlice(initialState, setQuery("h"));
     expect(newState.pageNumber).toBe(1);
     expect(newState.starships).toEqual([]);
-    expect(newState.query).toEqual(mockQuery);
+    expect(newState.query).toEqual("h");
   });
 
   it("clear starships data", () => {

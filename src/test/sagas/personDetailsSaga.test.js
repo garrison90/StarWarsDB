@@ -18,7 +18,7 @@ import {
   selectPersonId,
   selectPersonStarshipsIds,
 } from "../../store/selectors/people";
-import { mockPerson, mockPlanet, mockStarships } from "../helpers/mockData";
+import { fakePerson, fakePlanet, fakeStarships } from "../helpers/mockData";
 
 describe("test person details saga", () => {
   const initialState = {
@@ -30,11 +30,11 @@ describe("test person details saga", () => {
     const saga = expectSaga(personDetailsSagaWorker)
       .provide([
         [select(selectPersonId), 23],
-        [matchers.call.fn(getPerson), mockPerson],
+        [matchers.call.fn(getPerson), fakePerson],
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPersonDataRequest.type).run();
-    expect(result.storeState.people.selectedPerson).toStrictEqual(mockPerson);
+    expect(result.storeState.people.selectedPerson).toStrictEqual(fakePerson);
   });
 
   test("should load person starships and person homeworld in case of success", async () => {
@@ -42,13 +42,13 @@ describe("test person details saga", () => {
       .provide([
         [select(selectPersonHomeworldId), 17],
         [select(selectPersonStarshipsIds), [1, 7, 9]],
-        { all: () => [mockStarships, mockPlanet] },
+        { all: () => [fakeStarships, fakePlanet] },
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPersonDataRequestSuccess.type).run();
-    expect(result.storeState.people.personHomeworld).toStrictEqual(mockPlanet);
+    expect(result.storeState.people.personHomeworld).toStrictEqual(fakePlanet);
     expect(result.storeState.people.personStarships).toStrictEqual(
-      mockStarships
+      fakeStarships
     );
   });
 

@@ -1,7 +1,7 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
-import { fakeStarship, mockPeopleData } from "../helpers/mockData";
+import { fakePeopleData, fakeStarship } from "../helpers/mockData";
 import rootReducer from "../../store/reducers/rootReducer";
 import {
   getStarshipDetailsRequest,
@@ -46,10 +46,10 @@ describe("starship details saga test", () => {
 
   test("should load starship pilots in case of success", async () => {
     const saga = expectSaga(starshipPilotsSagaWorker)
-      .provide([[select(selectPilots), [1, 2]], { all: () => mockPeopleData }])
+      .provide([[select(selectPilots), [1, 2]], { all: () => fakePeopleData }])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getStarshipDetailsSuccess.type).run();
-    expect(result.storeState.starships.pilots).toStrictEqual(mockPeopleData);
+    expect(result.storeState.starships.pilots).toStrictEqual(fakePeopleData);
   });
 
   test("should throw error in case of failure in starship details saga", async () => {

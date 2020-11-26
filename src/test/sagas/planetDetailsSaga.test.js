@@ -15,7 +15,7 @@ import {
   selectPlanetId,
   selectPlanetResidents,
 } from "../../store/selectors/planets";
-import { mockPeopleData, mockPlanet } from "../helpers/mockData";
+import { fakePeopleData, fakePlanet } from "../helpers/mockData";
 import rootReducer from "../../store/reducers/rootReducer";
 import { initialState as planetsState } from "../../store/reducers/planetsReducer";
 
@@ -30,22 +30,22 @@ describe("planet details saga test", () => {
     const saga = expectSaga(planetDetailsSagaWorker)
       .provide([
         [select(selectPlanetId), 23],
-        [matchers.call.fn(getPlanet), mockPlanet],
+        [matchers.call.fn(getPlanet), fakePlanet],
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPlanetDataRequest.type).run();
-    expect(result.storeState.planets.planet).toStrictEqual(mockPlanet);
+    expect(result.storeState.planets.planet).toStrictEqual(fakePlanet);
   });
 
   test("should load planet residents in case of success", async () => {
     const saga = expectSaga(planetResidentsSagaWorker)
       .provide([
         [select(selectPlanetResidents), [1, 2]],
-        { all: () => mockPeopleData },
+        { all: () => fakePeopleData },
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPlanetDataRequestSuccess.type).run();
-    expect(result.storeState.planets.residents).toStrictEqual(mockPeopleData);
+    expect(result.storeState.planets.residents).toStrictEqual(fakePeopleData);
   });
 
   test("should throw error in case of failure in planet redisents saga", async () => {

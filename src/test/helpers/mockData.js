@@ -1,4 +1,4 @@
-export const mockPeopleData = [
+export const fakePeopleData = [
   {
     name: "Luke Skywalker",
     homeworld: "Tatooine",
@@ -13,14 +13,14 @@ export const mockPeopleData = [
   },
 ];
 
-export const mockPerson = {
+export const fakePerson = {
   name: "Luke Skywalker",
   homeworld: "Tatooine",
   starships: ["X-wing", "Imperial shuttle"],
   id: 1,
 };
 
-export const mockStarships = [
+export const fakeStarships = [
   {
     name: "CR90 corvette",
     pilots: [],
@@ -51,7 +51,7 @@ export const mockStarships = [
   },
 ];
 
-export const mockPlanet = { name: "Dagobah", id: 4, residents: [] };
+export const fakePlanet = { name: "Dagobah", id: 4, residents: [] };
 
 export const fakeStarship = {
   name: "Millennium Falcon",
@@ -77,3 +77,15 @@ export const fakePlanets = [
   { name: "Dagobah" },
   { name: "Bespin" },
 ];
+
+export const fakePayload = {
+  starships: fakeStarships,
+  planet: fakePlanet,
+};
+
+export const fakeId = 23;
+
+export const fakeStarshipsDataOnServer = {
+  starships: fakeStarships,
+  next: false,
+};

@@ -1,6 +1,6 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { mockPeopleData } from "../helpers/mockData";
+import { fakePeopleData } from "../helpers/mockData";
 import { peopleSagaWorker } from "../../store/sagas/peopleSaga";
 import { getAllPeopleRequest } from "../../store/reducers/peopleSlice";
 import { initialState as peopleState } from "../../store/reducers/peopleSlice";
@@ -16,10 +16,10 @@ describe("people saga test", () => {
 
   test("should load people data in case of success", async () => {
     const saga = expectSaga(peopleSagaWorker)
-      .provide([[matchers.call.fn(getAllPeople), mockPeopleData]])
+      .provide([[matchers.call.fn(getAllPeople), fakePeopleData]])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getAllPeopleRequest.type).run();
-    expect(result.storeState.people.people).toStrictEqual(mockPeopleData);
+    expect(result.storeState.people.people).toStrictEqual(fakePeopleData);
   });
 
   test("should throw error in case of failure", async () => {

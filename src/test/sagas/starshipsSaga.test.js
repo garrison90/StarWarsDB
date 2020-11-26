@@ -9,7 +9,7 @@ import {
 } from "../../store/reducers/starshipsSlice";
 import { starshipsSagaWorker } from "../../store/sagas/starshipsSaga";
 import { selectPage, selectQuery } from "../../store/selectors/starships";
-import { mockStarships } from "../helpers/mockData";
+import { fakeStarships } from "../helpers/mockData";
 
 describe("starships saga test", () => {
   const initialState = {
@@ -24,13 +24,13 @@ describe("starships saga test", () => {
         [matchers.select(selectPage), 2],
         [
           matchers.call.fn(getAllStarships),
-          { starships: mockStarships, next: true },
+          { starships: fakeStarships, next: true },
         ],
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getStarshipsRequest.type).run();
-    expect(result.storeState.starships.hasMore).toStrictEqual(true);
-    expect(result.storeState.starships.starships).toStrictEqual(mockStarships);
+    expect(result.storeState.starships.hasMore).toBe(true);
+    expect(result.storeState.starships.starships).toStrictEqual(fakeStarships);
   });
 
   test("should throw error in case of failure in starships saga", async () => {

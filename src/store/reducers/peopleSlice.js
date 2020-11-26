@@ -40,8 +40,8 @@ const peopleSlice = createSlice({
       state.error = true;
     },
     getPersonStarshipsAndPlanetRequest(state, action) {
-      state.loading = false;
-      state.error = true;
+      state.loading = true;
+      state.error = false;
     },
     getPersonStarshipsAndPlanetSuccess(state, action) {
       state.personHomeworld = action.payload.planet;
