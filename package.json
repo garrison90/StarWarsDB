@@ -44,5 +44,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "redux-saga-test-plan": "^4.0.1"
+  }
 }

@@ -62,18 +62,18 @@ describe("test planets reducer", () => {
       { name: "R2-D2", id: 3 },
     ];
 
-    const mockPayload = {
+    /*  const mockPayload = {
       planet: mockPlanet,
       residents: mockResidents,
     };
-
+ */
     const newState = planetsReducer(
       initialState,
-      getPlanetDataRequestSuccess(mockPayload)
+      getPlanetDataRequestSuccess(mockPlanet)
     );
 
     expect(newState.planet).toEqual(mockPlanet);
-    expect(newState.residents).toEqual(mockResidents);
+    //expect(newState.residents).toEqual(mockResidents);
     expect(newState.loading).toBeFalsy();
   });
 

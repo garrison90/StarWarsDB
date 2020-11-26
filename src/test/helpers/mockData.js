@@ -52,3 +52,22 @@ export const mockStarships = [
 ];
 
 export const mockPlanet = { name: "Dagobah", id: 4, residents: [] };
+
+export const fakeStarship = {
+  name: "Millennium Falcon",
+  id: 23,
+  pilots: [
+    {
+      name: "Luke Skywalker",
+      homeworld: "Tatooine",
+      starships: ["X-wing", "Imperial shuttle"],
+      id: 1,
+    },
+    {
+      name: "R2-D2",
+      homeworld: "Naboo",
+      starships: [],
+      id: 2,
+    },
+  ],
+};

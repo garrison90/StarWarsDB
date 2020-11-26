@@ -6,6 +6,9 @@ import {
   getPlanetsDataRequest,
   getPlanetsDataRequestFailure,
   getPlanetsDataRequestSuccess,
+  getPlanetResidentsRequest,
+  getPlanetResidentsSuccess,
+  getPlanetResidentsFailure,
 } from "../actions/planets";
 
 export const initialState = {
@@ -37,12 +40,23 @@ export default createReducer(initialState, (builder) => {
       state.id = action.payload;
     })
     .addCase(getPlanetDataRequestSuccess, (state, action) => {
-      state.planet = action.payload.planet;
-      state.residents = action.payload.residents;
+      state.planet = action.payload;
       state.loading = false;
     })
     .addCase(getPlanetDataRequestFailure, (state, action) => {
       state.error = true;
       state.loading = false;
+    })
+    .addCase(getPlanetResidentsRequest, (state, action) => {
+      state.loading = true;
+      state.error = false;
+    })
+    .addCase(getPlanetResidentsSuccess, (state, action) => {
+      state.residents = action.payload;
+      state.loading = false;
+    })
+    .addCase(getPlanetResidentsFailure, (state, action) => {
+      state.loading = false;
+      state.error = true;
     });
 });

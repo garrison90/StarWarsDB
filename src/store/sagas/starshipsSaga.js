@@ -7,11 +7,11 @@ import {
 } from "../reducers/starshipsSlice";
 import { selectPage, selectQuery } from "../selectors/starships";
 
-export default function* anotherStarshipsSaga() {
+export default function* starshipsSaga() {
   yield takeLatest(getStarshipsRequest.type, starshipsSagaWorker);
 }
 
-function* starshipsSagaWorker() {
+export function* starshipsSagaWorker() {
   try {
     const query = yield select(selectQuery);
     const pageNumber = yield select(selectPage);

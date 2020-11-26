@@ -13,7 +13,7 @@ export default function* starshipDetailsSaga() {
   yield takeEvery(getStarshipDetailsRequest.type, starshipDetailsSagaWorker);
 }
 
-function* starshipDetailsSagaWorker() {
+export function* starshipDetailsSagaWorker() {
   try {
     const id = yield select(selectStarshipId);
     const starship = yield call(getStarship, id);

@@ -5,26 +5,32 @@ import {
   getPlanetDataRequest,
   getPlanetDataRequestFailure,
   getPlanetDataRequestSuccess,
+  getPlanetResidentsFailure,
+  getPlanetResidentsSuccess,
 } from "../actions/planets";
-import { selectPlanetId } from "../selectors/planets";
-import { idRegExp } from "../../helpers/helpers";
+import { selectPlanetId, selectPlanetResidents } from "../selectors/planets";
 
 export default function* planetDetailsSaga() {
-  yield takeEvery(getPlanetDataRequest.toString(), planetDetailsSagaWorker);
+  yield takeEvery(getPlanetDataRequest.type, planetDetailsSagaWorker);
+  yield takeEvery(getPlanetDataRequestSuccess.type, planetResidentsSagaWorker);
 }
 
 export function* planetDetailsSagaWorker() {
   try {
     const id = yield select(selectPlanetId);
-    let planet = yield call(getPlanet, id);
-
-    let residents = yield all(
-      planet.residents.map((resident) =>
-        call(getPerson, resident.match(idRegExp)[1])
-      )
-    );
-    yield put(getPlanetDataRequestSuccess({ planet, residents }));
+    const planet = yield call(getPlanet, id);
+    yield put(getPlanetDataRequestSuccess(planet));
   } catch (e) {
     yield put(getPlanetDataRequestFailure());
+  }
+}
+
+export function* planetResidentsSagaWorker() {
+  try {
+    const residents = yield select(selectPlanetResidents);
+    const results = yield all(residents.map((id) => call(getPerson, id)));
+    yield put(getPlanetResidentsSuccess(results));
+  } catch (e) {
+    yield put(getPlanetResidentsFailure());
   }
 }
