@@ -2,11 +2,9 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { getPerson } from "../../services/people-service";
 import { getPlanet } from "../../services/planets-service";
 import {
   getPlanetDataRequest,
-  getPlanetDataRequestFailure,
   getPlanetDataRequestSuccess,
 } from "../../store/actions/planets";
 import {
@@ -17,7 +15,7 @@ import {
   selectPlanetId,
   selectPlanetResidents,
 } from "../../store/selectors/planets";
-import { mockPerson, mockPlanet } from "../helpers/mockData";
+import { mockPeopleData, mockPlanet } from "../helpers/mockData";
 import rootReducer from "../../store/reducers/rootReducer";
 import { initialState as planetsState } from "../../store/reducers/planetsReducer";
 
@@ -25,6 +23,8 @@ describe("planet details saga test", () => {
   const initialState = {
     planets: planetsState,
   };
+
+  const error = new Error("error");
 
   test("should load planet details data in case of success", async () => {
     const saga = expectSaga(planetDetailsSagaWorker)
@@ -40,30 +40,23 @@ describe("planet details saga test", () => {
   test("should load planet residents in case of success", async () => {
     const saga = expectSaga(planetResidentsSagaWorker)
       .provide([
-        [select(selectPlanetResidents), ["1"]],
-        [matchers.call.fn(getPerson), mockPerson],
+        [select(selectPlanetResidents), [1, 2]],
+        { all: () => mockPeopleData },
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPlanetDataRequestSuccess.type).run();
-    expect(result.storeState.planets.residents).toStrictEqual([mockPerson]);
+    expect(result.storeState.planets.residents).toStrictEqual(mockPeopleData);
   });
 
   test("should throw error in case of failure in planet redisents saga", async () => {
-    const error = new Error("error");
-
     const saga = expectSaga(planetResidentsSagaWorker)
-      .provide([
-        [select(selectPlanetResidents), ["1"]],
-        [matchers.call.fn(getPerson), throwError(error)],
-      ])
+      .provide({ all: () => throwError(error) })
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPlanetDataRequestSuccess.type).run();
     expect(result.storeState.planets.error).toBeTruthy();
   });
 
   test("should throw error in case of failure in planet details saga", async () => {
-    const error = new Error("error");
-
     const saga = expectSaga(planetDetailsSagaWorker)
       .provide([
         [select(selectPlanetId), 23],

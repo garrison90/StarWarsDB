@@ -64,11 +64,6 @@ describe("test starships slice", () => {
     ],
   };
 
-  const mockStarshipDetails = {
-    starship: mockStarship,
-    pilots: mockStarship.pilots,
-  };
-
   const mockMoreStarshipsData = [
     {
       name: "X-wing",
@@ -169,12 +164,11 @@ describe("test starships slice", () => {
   it("get starship details data request success", () => {
     const newState = starshipsSlice(
       initialState,
-      getStarshipDetailsSuccess(mockStarshipDetails)
+      getStarshipDetailsSuccess(mockStarship)
     );
 
     expect(newState.loading).toBeFalsy();
     expect(newState.starship).toEqual(mockStarship);
-    expect(newState.pilots).toEqual(mockStarship.pilots);
   });
 
   it("get starship details request failure", () => {

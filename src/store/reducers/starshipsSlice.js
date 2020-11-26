@@ -35,14 +35,29 @@ const starshipsSlice = createSlice({
       state.error = false;
     },
     getStarshipDetailsSuccess(state, action) {
-      state.starship = action.payload.starship;
-      state.pilots = action.payload.pilots;
+      state.starship = action.payload;
       state.loading = false;
     },
     getStarshipDetailsFailure(state, action) {
       state.loading = false;
       state.error = true;
     },
+
+    getStarshipPilotsRequest(state, action) {
+      state.loading = true;
+      state.error = false;
+    },
+
+    getStarshipPilotsSuccess(state, action) {
+      state.loading = false;
+      state.pilots = action.payload;
+    },
+
+    getStarshipPilotsFailure(state, action) {
+      state.loading = false;
+      state.error = true;
+    },
+
     setPageNumber(state, action) {
       state.pageNumber += 1;
     },
@@ -65,5 +80,8 @@ export const {
   setPageNumber,
   setQuery,
   clearStarships,
+  getStarshipPilotsRequest,
+  getStarshipPilotsSuccess,
+  getStarshipPilotsFailure,
 } = starshipsSlice.actions;
 export default starshipsSlice.reducer;
