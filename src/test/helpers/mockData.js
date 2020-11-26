@@ -71,3 +71,9 @@ export const fakeStarship = {
     },
   ],
 };
+
+export const fakePlanets = [
+  { name: "Tatooine" },
+  { name: "Dagobah" },
+  { name: "Bespin" },
+];

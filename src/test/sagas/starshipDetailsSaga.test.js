@@ -1,15 +1,9 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
-import {
-  fakeStarship,
-  mockPeopleData,
-  mockPerson,
-  mockPlanet,
-} from "../helpers/mockData";
+import { fakeStarship, mockPeopleData } from "../helpers/mockData";
 import rootReducer from "../../store/reducers/rootReducer";
 import {
-  getStarshipDetailsFailure,
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   initialState as starshipsState,
