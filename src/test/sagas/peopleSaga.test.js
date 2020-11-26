@@ -1,36 +1,32 @@
-import { runSaga } from "redux-saga";
-import * as api from "../../services/people-service";
+import { expectSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
 import { mockPeopleData } from "../helpers/mockData";
 import { peopleSagaWorker } from "../../store/sagas/peopleSaga";
-import {
-  getAllPeopleRequestFailure,
-  getAllPeopleRequestSuccess,
-} from "../../store/reducers/peopleSlice";
+import { getAllPeopleRequest } from "../../store/reducers/peopleSlice";
+import { initialState as peopleState } from "../../store/reducers/peopleSlice";
+import { getAllPeople } from "../../services/people-service";
+import rootReducer from "../../store/reducers/rootReducer";
+import { throwError } from "redux-saga-test-plan/providers";
 
-test("should load people data in case of success", async () => {
-  const dispatchedActions = [];
-  api.getAllPeople = jest.fn(() => Promise.resolve(mockPeopleData));
-
-  const fakeStore = {
-    dispatch: (action) => dispatchedActions.push(action),
+describe("people saga test", () => {
+  const initialState = {
+    people: peopleState,
   };
+  const error = new Error("error");
 
-  await runSaga(fakeStore, peopleSagaWorker).done;
-  expect(api.getAllPeople.mock.calls.length).toBe(1);
-  expect(dispatchedActions).toContainEqual(
-    getAllPeopleRequestSuccess(mockPeopleData)
-  );
-});
+  test("should load people data in case of success", async () => {
+    const saga = expectSaga(peopleSagaWorker)
+      .provide([[matchers.call.fn(getAllPeople), mockPeopleData]])
+      .withReducer(rootReducer, initialState);
+    const result = await saga.dispatch(getAllPeopleRequest.type).run();
+    expect(result.storeState.people.people).toStrictEqual(mockPeopleData);
+  });
 
-test("should handle error in case of failure", async () => {
-  const dispatchedActions = [];
-  api.getAllPeople = jest.fn(() => Promise.reject());
-
-  const fakeStore = {
-    dispatch: (action) => dispatchedActions.push(action),
-  };
-
-  await runSaga(fakeStore, peopleSagaWorker).done;
-  expect(api.getAllPeople.mock.calls.length).toBe(1);
-  expect(dispatchedActions).toContainEqual(getAllPeopleRequestFailure());
+  test("should throw error in case of failure", async () => {
+    const saga = expectSaga(peopleSagaWorker)
+      .provide([[matchers.call.fn(getAllPeople), throwError(error)]])
+      .withReducer(rootReducer, initialState);
+    const result = await saga.dispatch(getAllPeopleRequest.type).run();
+    expect(result.storeState.people.error).toBeTruthy();
+  });
 });

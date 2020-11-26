@@ -7,7 +7,7 @@ import {
 } from "../actions/planets";
 
 export default function* planetsSaga() {
-  yield takeEvery(getPlanetsDataRequest.toString(), planetsSagaWorker);
+  yield takeEvery(getPlanetsDataRequest.type, planetsSagaWorker);
 }
 
 export function* planetsSagaWorker() {

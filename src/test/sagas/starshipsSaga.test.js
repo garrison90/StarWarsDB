@@ -1,39 +1,47 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { select } from "redux-saga/effects";
 import { getAllStarships } from "../../services/starships-service";
+import rootReducer from "../../store/reducers/rootReducer";
 import {
-  getStarshipsFailure,
-  getStarshipsSuccess,
+  getStarshipsRequest,
+  initialState as starshipsState,
 } from "../../store/reducers/starshipsSlice";
 import { starshipsSagaWorker } from "../../store/sagas/starshipsSaga";
 import { selectPage, selectQuery } from "../../store/selectors/starships";
 import { mockStarships } from "../helpers/mockData";
 
-describe("test starships saga", () => {
+describe("starships saga test", () => {
+  const initialState = {
+    starships: starshipsState,
+  };
+  const error = new Error("error");
+
   test("should load starships data in case of success", async () => {
-    const fakeData = { starships: mockStarships, next: true };
-
-    await expectSaga(starshipsSagaWorker)
+    const saga = expectSaga(starshipsSagaWorker)
       .provide([
-        [select(selectQuery), "w"],
-        [select(selectPage), 2],
-        [matchers.call.fn(getAllStarships), fakeData],
+        [matchers.select(selectQuery), "w"],
+        [matchers.select(selectPage), 2],
+        [
+          matchers.call.fn(getAllStarships),
+          { starships: mockStarships, next: true },
+        ],
       ])
-      .put(getStarshipsSuccess(fakeData))
-      .run();
+      .withReducer(rootReducer, initialState);
+    const result = await saga.dispatch(getStarshipsRequest.type).run();
+    expect(result.storeState.starships.hasMore).toStrictEqual(true);
+    expect(result.storeState.starships.starships).toStrictEqual(mockStarships);
   });
-  test("should throw error in case of failure", async () => {
-    const error = new Error("error");
 
-    await expectSaga(starshipsSagaWorker)
+  test("should throw error in case of failure in starships saga", async () => {
+    const saga = expectSaga(starshipsSagaWorker)
       .provide([
-        [select(selectQuery), "w"],
-        [select(selectPage), 2],
+        [matchers.select(selectQuery), "w"],
+        [matchers.select(selectPage), 2],
         [matchers.call.fn(getAllStarships), throwError(error)],
       ])
-      .put(getStarshipsFailure())
-      .run();
+      .withReducer(rootReducer, initialState);
+    const result = await saga.dispatch(getStarshipsRequest.type).run();
+    expect(result.storeState.starships.error).toBeTruthy();
   });
 });
