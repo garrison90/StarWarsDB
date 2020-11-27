@@ -13,6 +13,9 @@ export const transformPlanet = (planet) => {
     diameter: planet.diameter,
     residents: planet.residents,
     climate: planet.climate,
+    gravity: planet.gravity,
+    terrain: planet.terrain,
+    surfaceWater: planet.surface_water,
   };
 };
 
@@ -25,6 +28,10 @@ export const transformPerson = (person) => {
     eyeColor: person.eye_color,
     homeworld: person.homeworld,
     starships: person.starships,
+    height: person.height,
+    mass: person.mass,
+    hairColor: person.hair_color,
+    skinColor: person.skin_color,
   };
 };
 

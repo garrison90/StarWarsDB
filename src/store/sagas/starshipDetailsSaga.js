@@ -6,6 +6,7 @@ import {
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   getStarshipPilotsFailure,
+  getStarshipPilotsRequest,
   getStarshipPilotsSuccess,
 } from "../reducers/starshipsSlice";
 import { selectPilots, selectStarshipId } from "../selectors/starships";
@@ -27,6 +28,7 @@ export function* starshipDetailsSagaWorker() {
 
 export function* starshipPilotsSagaWorker() {
   try {
+    yield put(getStarshipPilotsRequest());
     const pilotsIds = yield select(selectPilots);
     const pilots = yield all(pilotsIds.map((id) => call(getPerson, id)));
     yield put(getStarshipPilotsSuccess(pilots));

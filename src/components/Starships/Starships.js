@@ -1,5 +1,6 @@
 import React from "react";
 import "./Starships.css";
+import Loader from "../Loader/Loader";
 
 function Starships({
   query,
@@ -31,6 +32,7 @@ function Starships({
           if (starships.length === index + 1) {
             return (
               <li
+                id="starship"
                 ref={lastStarshipElementRef}
                 key={starship.id}
                 onClick={() => move(starship.id)}
@@ -43,7 +45,11 @@ function Starships({
             );
           } else {
             return (
-              <li key={starship.id} onClick={() => move(starship.id)}>
+              <li
+                id="starship"
+                key={starship.id}
+                onClick={() => move(starship.id)}
+              >
                 {starship.name}
                 <br />
                 <span>Model : </span>
@@ -53,8 +59,7 @@ function Starships({
           }
         })}
       </ul>
-      <div>{loading && "Preloader"}</div>
-      {/* <div>{error && "Error"}</div> */}
+      <div>{loading && <Loader />}</div>
     </>
   );
 }

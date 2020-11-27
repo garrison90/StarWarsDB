@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, getContext, put, select, takeLatest } from "redux-saga/effects";
 import { getAllStarships } from "../../services/starships-service";
 import {
   getStarshipsFailure,
@@ -18,6 +18,12 @@ export function* starshipsSagaWorker() {
     const response = yield call(getAllStarships, [query, pageNumber]);
     const { starships, next } = response;
     yield put(getStarshipsSuccess({ starships, next }));
+    const history = yield getContext("history");
+    let searchStr = query ? `/?search=${query}` : "";
+    yield call(history.push, {
+      pathname: "/starships",
+      search: searchStr,
+    });
   } catch (e) {
     yield put(getStarshipsFailure());
   }

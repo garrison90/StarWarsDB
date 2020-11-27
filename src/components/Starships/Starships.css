@@ -13,7 +13,7 @@ ul {
           flex-direction: column;
 }
 
-li {
+#starship {
   position: relative;
   display: block;
   border: 1px solid #0a0a0a;
@@ -27,67 +27,67 @@ li {
           animation-fill-mode: both;
 }
 
-li span {
+#starship span {
   color: #af0606;
 }
 
-li:hover {
+#starship:hover {
   cursor: pointer;
   background-color: #343a40;
   color: white;
   border-color: white;
 }
 
-li:hover span {
+#starship:hover span {
   color: #f50e0e;
 }
 
-li:nth-child(1) {
+#starship:nth-child(1) {
   -webkit-animation-delay: 0.25s;
           animation-delay: 0.25s;
 }
 
-li:nth-child(2) {
+#starship:nth-child(2) {
   -webkit-animation-delay: 0.5s;
           animation-delay: 0.5s;
 }
 
-li:nth-child(3) {
+#starship:nth-child(3) {
   -webkit-animation-delay: 0.75s;
           animation-delay: 0.75s;
 }
 
-li:nth-child(4) {
+#starship:nth-child(4) {
   -webkit-animation-delay: 1s;
           animation-delay: 1s;
 }
 
-li:nth-child(5) {
+#starship:nth-child(5) {
   -webkit-animation-delay: 1.25s;
           animation-delay: 1.25s;
 }
 
-li:nth-child(6) {
+#starship:nth-child(6) {
   -webkit-animation-delay: 1.5s;
           animation-delay: 1.5s;
 }
 
-li:nth-child(7) {
+#starship:nth-child(7) {
   -webkit-animation-delay: 1.75s;
           animation-delay: 1.75s;
 }
 
-li:nth-child(8) {
+#starship:nth-child(8) {
   -webkit-animation-delay: 2s;
           animation-delay: 2s;
 }
 
-li:nth-child(9) {
+#starship:nth-child(9) {
   -webkit-animation-delay: 2.25s;
           animation-delay: 2.25s;
 }
 
-li:nth-child(10) {
+#starship:nth-child(10) {
   -webkit-animation-delay: 2.5s;
           animation-delay: 2.5s;
 }
@@ -131,8 +131,9 @@ form {
 }
 
 .input-field {
+  margin-left: 40px;
   position: relative;
-  width: 250px;
+  width: 450px;
   height: 44px;
   line-height: 44px;
 }
@@ -159,17 +160,11 @@ input {
   color: #111;
 }
 
-input:invalid {
-  outline: 0;
-}
-
-input:focus,
-input:valid {
+input:focus {
   border-color: #0a0a0a;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+input:focus ~ label {
   font-size: 14px;
   top: -24px;
   color: #0a0a0a;
