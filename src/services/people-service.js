@@ -1,10 +1,15 @@
 import { httpClient } from "./api";
 import { transformPerson } from "../helpers/helpers";
 
-const getAllPeople = async () => {
-  const response = await httpClient.get(`/people/`);
-  const people = response.data.results;
-  return people.map(transformPerson);
+const getAllPeople = async ([query, pageNumber]) => {
+  const params = { search: query, page: pageNumber };
+  const response = await httpClient.get(`/people/`, { params });
+  const itemsData = response.data.results;
+  const items = itemsData.map(transformPerson);
+  return {
+    next: response.data.next,
+    items,
+  };
 };
 
 const getPerson = async (id) => {

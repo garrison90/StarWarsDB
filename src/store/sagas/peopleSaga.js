@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+/* import { call, put, takeEvery } from "redux-saga/effects";
 import {
   getAllPeopleRequest,
   getAllPeopleRequestFailure,
@@ -17,4 +17,4 @@ export function* peopleSagaWorker() {
   } catch (e) {
     yield put(getAllPeopleRequestFailure());
   }
-}
+} */

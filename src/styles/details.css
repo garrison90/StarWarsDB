@@ -7,6 +7,8 @@
   margin: 20px;
   color: white;
   text-align: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .wrapper .first-block h2, .wrapper .second-block h2 {

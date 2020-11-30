@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  people: [],
   selectedPerson: {},
   personHomeworld: {},
   personStarships: [],
@@ -14,18 +13,6 @@ const peopleSlice = createSlice({
   name: "people",
   initialState,
   reducers: {
-    getAllPeopleRequest(state, action) {
-      state.loading = true;
-      state.error = false;
-    },
-    getAllPeopleRequestSuccess(state, action) {
-      state.people = action.payload;
-      state.loading = false;
-    },
-    getAllPeopleRequestFailure(state, action) {
-      state.error = true;
-      state.loading = false;
-    },
     getPersonDataRequest(state, action) {
       state.loading = true;
       state.id = action.payload;
@@ -56,9 +43,6 @@ const peopleSlice = createSlice({
 });
 
 export const {
-  getAllPeopleRequest,
-  getAllPeopleRequestFailure,
-  getAllPeopleRequestSuccess,
   getPersonDataRequestFailure,
   getPersonDataRequestSuccess,
   getPersonDataRequest,

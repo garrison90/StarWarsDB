@@ -1,15 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const getPlanetsDataRequest = createAction(
-  "planets/getPlanetsDataRequest"
-);
-export const getPlanetsDataRequestSuccess = createAction(
-  "planets/getPlanetsDataRequestSuccess"
-);
-export const getPlanetsDataRequestFailure = createAction(
-  "planets/getPlanetsDataRequestFailure"
-);
-
 export const getPlanetDataRequest = createAction(
   "planets/getPlanetDataRequest"
 );

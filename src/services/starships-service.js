@@ -4,11 +4,11 @@ import { httpClient } from "./api";
 const getAllStarships = async ([query, pageNumber]) => {
   const params = { search: query, page: pageNumber };
   const response = await httpClient.get(`starships`, { params });
-  const starshipData = response.data.results;
-  let starships = starshipData.map(transformStarship);
+  const itemsData = response.data.results;
+  let items = itemsData.map(transformStarship);
   return {
     next: response.data.next,
-    starships: starships,
+    items: items,
   };
 };
 

@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+/* import { call, put, takeEvery } from "redux-saga/effects";
 import { getAllPlanets } from "../../services/planets-service";
 import {
   getPlanetsDataRequest,
@@ -18,3 +18,4 @@ export function* planetsSagaWorker() {
     yield put(getPlanetsDataRequestFailure());
   }
 }
+ */

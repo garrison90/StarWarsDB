@@ -2,22 +2,34 @@ import Header from "./components/Header/Header";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { routes } from "./constansts/routes";
 import { lazy, Suspense } from "react";
+import {
+  getAllPeopleRequest,
+  getPlanetsDataRequest,
+  getStarshipsRequest,
+} from "./store/reducers/itemsSlice";
+import {
+  peopleFields,
+  peopleLabels,
+  planetFields,
+  planetLabels,
+  starshipsFields,
+  starshipsLabels,
+} from "./helpers/fieldsAndLabelsArrays";
+
+const ItemsContainer = lazy(() => import("./containers/ItemsContainer"));
 
 const PersonDetailsContainer = lazy(() =>
   import("./containers/PersonDetailsContainer")
 );
 
-const PeopleContainer = lazy(() => import("./containers/PeopleContainer"));
 const PlanetDetailsContainer = lazy(() =>
   import("./containers/PlanetDetailsContainer")
 );
-const StarshipsContainer = lazy(() =>
-  import("./containers/StarshipsContainer")
-);
+
 const StarshipDetailsContainer = lazy(() =>
   import("./containers/StarshipsDetailsContainer")
 );
-const PlanetsContainer = lazy(() => import("./containers/PlanetsContainer"));
+
 const Home = lazy(() => import("./components/Home/Home"));
 function App() {
   const {
@@ -36,17 +48,47 @@ function App() {
       <Suspense fallback={null}>
         <Switch>
           <Route exact path={HOME.INDEX} component={Home} />
-          <Route exact path={STARSHIPS.INDEX} component={StarshipsContainer} />
+          <Route
+            exact
+            path={STARSHIPS.INDEX}
+            render={() => (
+              <ItemsContainer
+                getData={getStarshipsRequest}
+                fields={starshipsFields}
+                labels={starshipsLabels}
+              />
+            )}
+          />
           <Route
             path={STARSHIP_DETAILS.INDEX}
             component={StarshipDetailsContainer}
           />
-          <Route exact path={PEOPLE.INDEX} component={PeopleContainer} />
+          <Route
+            exact
+            path={PEOPLE.INDEX}
+            render={() => (
+              <ItemsContainer
+                getData={getAllPeopleRequest}
+                fields={peopleFields}
+                labels={peopleLabels}
+              />
+            )}
+          />
           <Route
             path={PERSON_DETAILS.INDEX}
             component={PersonDetailsContainer}
           />
-          <Route exact path={PLANETS.INDEX} component={PlanetsContainer} />
+          <Route
+            exact
+            path={PLANETS.INDEX}
+            render={() => (
+              <ItemsContainer
+                getData={getPlanetsDataRequest}
+                fields={planetFields}
+                labels={planetLabels}
+              />
+            )}
+          />
           <Route
             path={PLANET_DETAILS.INDEX}
             component={PlanetDetailsContainer}

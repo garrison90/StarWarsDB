@@ -1,45 +1,43 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Starships from "../components/Starships/Starships";
-import { routes } from "../constansts/routes";
 import useLoading from "../hooks/useLoading";
 import useSwitchTo from "../hooks/useSwitchTo";
 import useError from "../hooks/useError";
 import {
-  clearStarships,
-  getStarshipsRequest,
+  clearItems,
   setPageNumber,
   setQuery,
-} from "../store/reducers/starshipsSlice";
+} from "../store/reducers/itemsSlice";
+import { Items } from "../components/Items/Items";
 import {
-  selectStarshipsError,
+  selectItems,
+  selectItemsError,
+  selectItemsLoading,
   selectHasMore,
-  selectStarshipsLoading,
-  selectPage,
   selectQuery,
-  selectStarships,
-} from "../store/selectors/starships";
+  selectPage,
+} from "../store/selectors/items";
+import { useLocation } from "react-router-dom";
 
-function StarshipsContainer() {
-  const loading = useLoading(selectStarshipsLoading);
-  const error = useError(selectStarshipsError);
-  const starships = useSelector(selectStarships);
+function ItemsContainer({ getData, labels, fields }) {
+  const loading = useLoading(selectItemsLoading);
+  const error = useError(selectItemsError);
+  const items = useSelector(selectItems);
   const hasMore = useSelector(selectHasMore);
   const query = useSelector(selectQuery);
   const pageNumber = useSelector(selectPage);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getStarshipsRequest());
-  }, [dispatch, query, pageNumber]);
+    dispatch(getData());
+  }, [dispatch, query, pageNumber, getData]);
 
   useEffect(() => {
-    return () => dispatch(clearStarships());
+    return () => {
+      dispatch(clearItems());
+    };
   }, [dispatch]);
-
   const moveTo = useSwitchTo();
-  const { STARSHIP_DETAILS } = routes;
-
   const observer = useRef();
   const lastStarshipElementRef = useCallback(
     (node) => {
@@ -55,9 +53,10 @@ function StarshipsContainer() {
     [loading, hasMore, dispatch]
   );
 
+  const location = useLocation();
+
   const move = (id) => {
-    const path = STARSHIP_DETAILS.createPath(id);
-    moveTo(path);
+    moveTo(location.pathname + `/${id}`);
   };
 
   const handleChange = (e) => {
@@ -65,15 +64,17 @@ function StarshipsContainer() {
   };
 
   return (
-    <Starships
-      starships={starships}
+    <Items
+      items={items}
       move={move}
       handleChange={handleChange}
       lastStarshipElementRef={lastStarshipElementRef}
+      labels={labels}
+      fields={fields}
       loading={loading}
       error={error}
     />
   );
 }
 
-export default StarshipsContainer;
+export default ItemsContainer;
