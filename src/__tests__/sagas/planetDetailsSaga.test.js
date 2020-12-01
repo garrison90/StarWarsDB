@@ -15,9 +15,9 @@ import {
   selectPlanetId,
   selectPlanetResidents,
 } from "../../store/selectors/planets";
-import { fakePeopleData, fakePlanet } from "../helpers/mockData";
 import rootReducer from "../../store/reducers/rootReducer";
 import { initialState as planetsState } from "../../store/reducers/planetsReducer";
+import { fakePeopleData, fakePlanet } from "../../helpers/mockData";
 
 describe("planet details saga test", () => {
   const initialState = {

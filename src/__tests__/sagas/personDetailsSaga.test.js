@@ -2,6 +2,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
+import { fakePerson, fakePlanet, fakeStarships } from "../../helpers/mockData";
 import { getPerson } from "../../services/people-service";
 import {
   getPersonDataRequest,
@@ -18,7 +19,6 @@ import {
   selectPersonId,
   selectPersonStarshipsIds,
 } from "../../store/selectors/people";
-import { fakePerson, fakePlanet, fakeStarships } from "../helpers/mockData";
 
 describe("test person details saga", () => {
   const initialState = {

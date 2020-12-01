@@ -1,7 +1,5 @@
+import { fakePeopleData, fakePlanet } from "../../helpers/mockData";
 import {
-  getPlanetsDataRequest,
-  getPlanetsDataRequestSuccess,
-  getPlanetsDataRequestFailure,
   getPlanetDataRequest,
   getPlanetDataRequestSuccess,
   getPlanetDataRequestFailure,
@@ -12,36 +10,8 @@ import {
 import planetsReducer, {
   initialState,
 } from "../../store/reducers/planetsReducer";
-import { fakePeopleData, fakePlanet, fakePlanets } from "../helpers/mockData";
 
 describe("test planets reducer", () => {
-  it("get planets data request", () => {
-    expect(planetsReducer(initialState, getPlanetsDataRequest)).toEqual({
-      ...initialState,
-      loading: true,
-      error: false,
-    });
-  });
-
-  it("get planets data request success", () => {
-    const newState = planetsReducer(
-      initialState,
-      getPlanetsDataRequestSuccess(fakePlanets)
-    );
-
-    expect(newState.loading).toBeFalsy();
-    expect(newState.planets).toEqual(fakePlanets);
-  });
-
-  it("get planets data request error", () => {
-    const newState = planetsReducer(
-      initialState,
-      getPlanetsDataRequestFailure()
-    );
-    expect(newState.loading).toBeFalsy();
-    expect(newState.error).toBe(true);
-  });
-
   it("get planet details request", () => {
     const mockId = 5;
     const newState = planetsReducer(initialState, getPlanetDataRequest(mockId));

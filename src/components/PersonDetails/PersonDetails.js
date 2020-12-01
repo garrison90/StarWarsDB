@@ -13,7 +13,8 @@ function PersonDetails({ loading, starships, homeworld, error, person, move }) {
         <h2>{person.name}</h2>
         <ul>
           <li>
-            <span>Gender: </span> Gender: {person.gender}
+            <span>Gender: </span>
+            {person.gender}
           </li>
           <li>
             <span>BirthYear: </span>

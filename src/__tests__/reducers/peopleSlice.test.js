@@ -1,7 +1,11 @@
+import {
+  fakeId,
+  fakePayload,
+  fakePerson,
+  fakePlanet,
+  fakeStarships,
+} from "../../helpers/mockData";
 import peopleSlice, {
-  getAllPeopleRequest,
-  getAllPeopleRequestFailure,
-  getAllPeopleRequestSuccess,
   getPersonDataRequest,
   getPersonDataRequestFailure,
   getPersonDataRequestSuccess,
@@ -10,38 +14,8 @@ import peopleSlice, {
   getPersonStarshipsAndPlanetSuccess,
   initialState,
 } from "../../store/reducers/peopleSlice";
-import {
-  fakePeopleData,
-  fakeId,
-  fakePerson,
-  fakePlanet,
-  fakeStarships,
-  fakePayload,
-} from "../helpers/mockData";
 
 describe("test peopls slice", () => {
-  it("get all people data request", () => {
-    const newState = peopleSlice(initialState, getAllPeopleRequest());
-    expect(newState.error).toBeFalsy();
-    expect(newState.loading).toBeTruthy();
-  });
-
-  it("get all people data request success", () => {
-    const newState = peopleSlice(
-      initialState,
-      getAllPeopleRequestSuccess(fakePeopleData)
-    );
-
-    expect(newState.loading).toBeFalsy();
-    expect(newState.people).toEqual(fakePeopleData);
-  });
-
-  it("get all people data request failure", () => {
-    const newState = peopleSlice(initialState, getAllPeopleRequestFailure());
-    expect(newState).toBeTruthy();
-    expect(newState.loading).toBeFalsy();
-  });
-
   it("get person details data request", () => {
     const newState = peopleSlice(initialState, getPersonDataRequest(fakeId));
 

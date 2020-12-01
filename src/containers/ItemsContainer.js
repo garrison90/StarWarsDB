@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useLoading from "../hooks/useLoading";
 import useSwitchTo from "../hooks/useSwitchTo";
 import useError from "../hooks/useError";
-import {
-  clearItems,
-  setPageNumber,
-  setQuery,
-} from "../store/reducers/itemsSlice";
+import { clearItems, setPageNumber } from "../store/reducers/itemsSlice";
 import { Items } from "../components/Items/Items";
 import {
   selectItems,
@@ -59,15 +55,10 @@ function ItemsContainer({ getData, labels, fields }) {
     moveTo(location.pathname + `/${id}`);
   };
 
-  const handleChange = (e) => {
-    dispatch(setQuery(e.target.value));
-  };
-
   return (
     <Items
       items={items}
       move={move}
-      handleChange={handleChange}
       lastStarshipElementRef={lastStarshipElementRef}
       labels={labels}
       fields={fields}

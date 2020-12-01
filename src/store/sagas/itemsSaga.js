@@ -1,4 +1,4 @@
-import { call, takeEvery, put, select, getContext } from "redux-saga/effects";
+import { call, put, select, getContext, takeLatest } from "redux-saga/effects";
 import { sagaHelper } from "../../helpers/sagaHelpers";
 import {
   getAllPeopleRequest,
@@ -10,7 +10,7 @@ import {
 import { selectPage, selectQuery } from "../selectors/items";
 
 export default function* itemsSaga() {
-  yield takeEvery(
+  yield takeLatest(
     [
       getAllPeopleRequest.type,
       getPlanetsDataRequest.type,
@@ -34,7 +34,6 @@ export function* itemsSagaWorker({ type }) {
       search: searchStr,
     });
   } catch (e) {
-    console.log(e);
     yield put(getItemsRequestFailure());
   }
 }
