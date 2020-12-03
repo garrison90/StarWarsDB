@@ -14,6 +14,7 @@ import {
   selectPage,
 } from "../store/selectors/items";
 import { useLocation } from "react-router-dom";
+import { SearchForm } from "../components/SearchForm/SearchForm";
 
 function ItemsContainer({ getData, labels, fields }) {
   const loading = useLoading(selectItemsLoading);
@@ -33,6 +34,7 @@ function ItemsContainer({ getData, labels, fields }) {
       dispatch(clearItems());
     };
   }, [dispatch]);
+
   const moveTo = useSwitchTo();
   const observer = useRef();
   const lastStarshipElementRef = useCallback(
@@ -56,15 +58,18 @@ function ItemsContainer({ getData, labels, fields }) {
   };
 
   return (
-    <Items
-      items={items}
-      move={move}
-      lastStarshipElementRef={lastStarshipElementRef}
-      labels={labels}
-      fields={fields}
-      loading={loading}
-      error={error}
-    />
+    <>
+      <SearchForm />
+      <Items
+        items={items}
+        move={move}
+        lastStarshipElementRef={lastStarshipElementRef}
+        labels={labels}
+        fields={fields}
+        loading={loading}
+        error={error}
+      />
+    </>
   );
 }
 

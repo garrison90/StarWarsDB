@@ -1,0 +1,40 @@
+form {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.input-field {
+  margin-left: 40px;
+  position: relative;
+  width: 450px;
+  height: 44px;
+  line-height: 44px;
+}
+label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  color: #d3d3d3;
+  transition: 0.2s all;
+  cursor: text;
+}
+input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #d3d3d3;
+  box-shadow: none;
+  color: #111;
+  line-height: 25px;
+}
+
+input:focus {
+  border-color: rgb(10, 10, 10);
+}
+
+input:focus ~ label {
+  font-size: 14px;
+  top: -24px;
+  color: rgb(10, 10, 10);
+}

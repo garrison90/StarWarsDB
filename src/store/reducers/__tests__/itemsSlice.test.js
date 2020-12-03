@@ -1,4 +1,3 @@
-import { fakeStarships } from "../../helpers/mockData";
 import itemsSlice, {
   clearItems,
   getAllPeopleRequest,
@@ -9,7 +8,8 @@ import itemsSlice, {
   initialState,
   setPageNumber,
   setQuery,
-} from "../../store/reducers/itemsSlice";
+} from "../../reducers/itemsSlice";
+import { fakeStarships } from "../../../helpers/mockData";
 
 describe("items slice test", () => {
   it("get all people items data request", () => {

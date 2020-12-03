@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import Preloader from "../components/Preloader/Preloader";
+import { Loader } from "../components/Loader/Loader";
 
 function useLoading(loadingSelector) {
   const loading = useSelector(loadingSelector);
-  return useMemo(() => loading && <Preloader />, [loading]);
+  return useMemo(() => loading && <Loader />, [loading]);
 }
 
 export default useLoading;

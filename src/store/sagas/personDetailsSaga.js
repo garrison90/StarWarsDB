@@ -1,4 +1,11 @@
-import { call, put, takeEvery, all, select } from "redux-saga/effects";
+import {
+  call,
+  put,
+  takeEvery,
+  all,
+  select,
+  takeLatest,
+} from "redux-saga/effects";
 import { getPerson } from "../../services/people-service";
 import { getPlanet } from "../../services/planets-service";
 import { getStarship } from "../../services/starships-service";
@@ -16,7 +23,7 @@ import {
 } from "../selectors/people";
 
 export default function* personDetailsSaga() {
-  yield takeEvery(getPersonDataRequest.type, personDetailsSagaWorker);
+  yield takeLatest(getPersonDataRequest.type, personDetailsSagaWorker);
   yield takeEvery(
     getPersonDataRequestSuccess.type,
     personStarshipsAndPlanetSagaWorker

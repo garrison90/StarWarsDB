@@ -47,6 +47,7 @@ function PersonDetails({ loading, starships, homeworld, error, person, move }) {
             {starships.length ? (
               starships.map((starship) => (
                 <li
+                  data-testid="starship-item"
                   key={starship.id}
                   onClick={() => move(STARSHIP_DETAILS.createPath(starship.id))}
                 >
@@ -60,7 +61,10 @@ function PersonDetails({ loading, starships, homeworld, error, person, move }) {
         </div>
         <div className="planet-item">
           <h2>HomeWorld</h2>
-          <li onClick={() => move(PLANET_DETAILS.createPath(homeworld.id))}>
+          <li
+            data-testid="planet-item"
+            onClick={() => move(PLANET_DETAILS.createPath(homeworld.id))}
+          >
             Planet {homeworld.name}
           </li>
         </div>

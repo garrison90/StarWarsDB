@@ -42,12 +42,18 @@ function StarshipDetails({ starship, loading, move, pilots, error }) {
         <ul>
           {pilots.length ? (
             pilots.map((pilot) => (
-              <li key={pilot.id} onClick={() => move(pilot.id)}>
+              <li
+                key={pilot.id}
+                data-testid="pilot-item"
+                onClick={() => move(pilot.id)}
+              >
                 {pilot.name}
               </li>
             ))
           ) : (
-            <p>This starship doesn't have any pilot!</p>
+            <p data-testid="pilots-paragraph">
+              This starship doesn't have any pilot!
+            </p>
           )}
         </ul>
       </div>

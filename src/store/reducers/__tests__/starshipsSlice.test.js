@@ -1,10 +1,10 @@
-import { fakeId, fakeStarship } from "../../helpers/mockData";
 import starshipsSlice, {
   getStarshipDetailsFailure,
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   initialState,
-} from "../../store/reducers/starshipsSlice";
+} from "../../reducers/starshipsSlice";
+import { fakeId, fakeStarship } from "../../../helpers/mockData";
 
 describe("test starships slice", () => {
   it("get starship details data request", () => {

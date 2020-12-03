@@ -5,6 +5,7 @@ export const initialState = {
   pilots: [],
   loading: true,
   error: false,
+  id: "",
 };
 
 const starshipsSlice = createSlice({

@@ -34,7 +34,7 @@ ul {
 
 // Set delay per List Item
 @for $i from 1 through $total-items {
-  #starship:nth-child(#{$i}) {
+  #item:nth-child(#{$i}) {
     animation-delay: 0.25s * $i;
   }
 }
@@ -52,45 +52,4 @@ ul {
   100% {
     opacity: 1;
   }
-}
-
-form {
-  display: flex;
-  justify-content: center;
-  margin: 30px;
-}
-.input-field {
-  margin-left: 40px;
-  position: relative;
-  width: 450px;
-  height: 44px;
-  line-height: 44px;
-}
-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  color: #d3d3d3;
-  transition: 0.2s all;
-  cursor: text;
-}
-input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  padding: 0.5rem 0 5px;
-  border-bottom: 2px solid #d3d3d3;
-  box-shadow: none;
-  color: #111;
-}
-
-input:focus {
-  border-color: rgb(10, 10, 10);
-}
-
-input:focus ~ label {
-  font-size: 14px;
-  top: -24px;
-  color: rgb(10, 10, 10);
 }

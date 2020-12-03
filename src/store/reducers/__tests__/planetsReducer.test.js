@@ -1,4 +1,4 @@
-import { fakePeopleData, fakePlanet } from "../../helpers/mockData";
+import { fakePeopleData, fakePlanet } from "../../../helpers/mockData";
 import {
   getPlanetDataRequest,
   getPlanetDataRequestSuccess,
@@ -6,10 +6,8 @@ import {
   getPlanetResidentsRequest,
   getPlanetResidentsSuccess,
   getPlanetResidentsFailure,
-} from "../../store/actions/planets";
-import planetsReducer, {
-  initialState,
-} from "../../store/reducers/planetsReducer";
+} from "../../actions/planets";
+import planetsReducer, { initialState } from "../planetsReducer";
 
 describe("test planets reducer", () => {
   it("get planet details request", () => {

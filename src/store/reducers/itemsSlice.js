@@ -6,7 +6,6 @@ export const initialState = {
   error: false,
   hasMore: null,
   pageNumber: 1,
-  id: "",
   query: "",
 };
 

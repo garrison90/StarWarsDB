@@ -1,10 +1,3 @@
-import {
-  fakeId,
-  fakePayload,
-  fakePerson,
-  fakePlanet,
-  fakeStarships,
-} from "../../helpers/mockData";
 import peopleSlice, {
   getPersonDataRequest,
   getPersonDataRequestFailure,
@@ -13,7 +6,14 @@ import peopleSlice, {
   getPersonStarshipsAndPlanetRequest,
   getPersonStarshipsAndPlanetSuccess,
   initialState,
-} from "../../store/reducers/peopleSlice";
+} from "../../reducers/peopleSlice";
+import {
+  fakeId,
+  fakePayload,
+  fakePerson,
+  fakePlanet,
+  fakeStarships,
+} from "../../../helpers/mockData";
 
 describe("test peopls slice", () => {
   it("get person details data request", () => {

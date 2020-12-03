@@ -1,24 +1,28 @@
-import { expectSaga } from "redux-saga-test-plan";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { fakePerson, fakePlanet, fakeStarships } from "../../helpers/mockData";
-import { getPerson } from "../../services/people-service";
+import {
+  fakePerson,
+  fakePlanet,
+  fakeStarships,
+} from "../../../helpers/mockData";
+import { getPerson } from "../../../services/people-service";
 import {
   getPersonDataRequest,
   getPersonDataRequestSuccess,
   initialState as peopleState,
-} from "../../store/reducers/peopleSlice";
-import rootReducer from "../../store/reducers/rootReducer";
-import {
+} from "../../reducers/peopleSlice";
+import rootReducer from "../../reducers/rootReducer";
+import personDetailsSaga, {
   personDetailsSagaWorker,
   personStarshipsAndPlanetSagaWorker,
-} from "../../store/sagas/personDetailsSaga";
+} from "../../sagas/personDetailsSaga";
 import {
   selectPersonHomeworldId,
   selectPersonId,
   selectPersonStarshipsIds,
-} from "../../store/selectors/people";
+} from "../../selectors/people";
 
 describe("test person details saga", () => {
   const initialState = {
@@ -73,5 +77,25 @@ describe("test person details saga", () => {
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPersonDataRequest.type).run();
     expect(result.storeState.people.error).toBeTruthy();
+  });
+
+  test("should fire on getPersonDataRequest action", () => {
+    testSaga(personDetailsSaga)
+      .next()
+      .takeLatest(getPersonDataRequest.type, personDetailsSagaWorker)
+      .finish()
+      .isDone();
+  });
+
+  test("should fire on getPersonDataRequestSuccess action", () => {
+    testSaga(personDetailsSaga)
+      .next()
+      .next()
+      .takeEvery(
+        getPersonDataRequestSuccess.type,
+        personStarshipsAndPlanetSagaWorker
+      )
+      .finish()
+      .isDone();
   });
 });

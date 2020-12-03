@@ -1,23 +1,24 @@
-import { expectSaga } from "redux-saga-test-plan";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { getAllStarships } from "../../services/starships-service";
-import rootReducer from "../../store/reducers/rootReducer";
-import { itemsSagaWorker } from "../../store/sagas/itemsSaga";
-import { selectPage, selectQuery } from "../../store/selectors/items";
+
+import rootReducer from "../../reducers/rootReducer";
+import itemsSaga, { itemsSagaWorker } from "../itemsSaga";
+import { selectPage, selectQuery } from "../../selectors/items";
 import {
   getAllPeopleRequest,
   getPlanetsDataRequest,
   getStarshipsRequest,
   initialState as itemsState,
-} from "../../store/reducers/itemsSlice";
-import { getAllPeople } from "../../services/people-service";
-import { getAllPlanets } from "../../services/planets-service";
+} from "../../reducers/itemsSlice";
+import { getAllPeople } from "../../../services/people-service";
+import { getAllPlanets } from "../../../services/planets-service";
 import {
   fakePeopleData,
   fakePlanets,
   fakeStarships,
-} from "../../helpers/mockData";
+} from "../../../helpers/mockData";
+import { getAllStarships } from "../../../services/starships-service";
 
 describe("items saga test", () => {
   const initialState = {
@@ -37,7 +38,7 @@ describe("items saga test", () => {
       ])
       .withReducer(rootReducer, initialState);
 
-    const result = await saga.dispatch(getStarshipsRequest.type).run();
+    const result = await saga.dispatch(getStarshipsRequest.type).silentRun();
     expect(result.storeState.items.hasMore).toBe(true);
     expect(result.storeState.items.items).toStrictEqual(fakeStarships);
   });
@@ -50,7 +51,7 @@ describe("items saga test", () => {
         [matchers.call.fn(getAllStarships), throwError(error)],
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getStarshipsRequest.type).run();
+    const result = await saga.dispatch(getStarshipsRequest.type).silentRun();
     expect(result.storeState.items.error).toBeTruthy();
   });
 
@@ -62,7 +63,7 @@ describe("items saga test", () => {
         [matchers.call.fn(getAllPeople), { items: fakePeopleData, next: true }],
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getAllPeopleRequest.type).run();
+    const result = await saga.dispatch(getAllPeopleRequest.type).silentRun();
     expect(result.storeState.items.hasMore).toBe(true);
     expect(result.storeState.items.items).toStrictEqual(fakePeopleData);
   });
@@ -75,7 +76,7 @@ describe("items saga test", () => {
         [matchers.call.fn(getAllPeople), throwError(error)],
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getAllPeopleRequest.type).run();
+    const result = await saga.dispatch(getAllPeopleRequest.type).silentRun();
     expect(result.storeState.items.error).toBeTruthy();
   });
 
@@ -87,7 +88,7 @@ describe("items saga test", () => {
         [matchers.call.fn(getAllPlanets), { items: fakePlanets, next: null }],
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getPlanetsDataRequest.type).run();
+    const result = await saga.dispatch(getPlanetsDataRequest.type).silentRun();
     expect(result.storeState.items.hasMore).toBeFalsy();
     expect(result.storeState.items.items).toStrictEqual(fakePlanets);
   });
@@ -100,7 +101,22 @@ describe("items saga test", () => {
         [matchers.call.fn(getAllPlanets), throwError(error)],
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getPlanetsDataRequest.type).run();
+    const result = await saga.dispatch(getPlanetsDataRequest.type).silentRun();
     expect(result.storeState.items.error).toBeTruthy();
+  });
+
+  test("should fire worker saga", () => {
+    testSaga(itemsSaga)
+      .next()
+      .takeLatest(
+        [
+          getAllPeopleRequest.type,
+          getPlanetsDataRequest.type,
+          getStarshipsRequest.type,
+        ],
+        itemsSagaWorker
+      )
+      .finish()
+      .isDone();
   });
 });

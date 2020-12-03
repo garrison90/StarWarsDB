@@ -32,20 +32,26 @@ function PlanetDetails({ planet, error, loading, residents, move }) {
           </li>
         </ul>
       </div>
-      <div className="second-block">
-        <h2>Residents</h2>
-        <ul>
-          {residents.length ? (
-            residents.map((resident) => (
-              <li key={resident.id} onClick={() => move(resident.id)}>
-                {resident.name}
-              </li>
-            ))
-          ) : (
-            <p>This planet doesn't have any resident!</p>
-          )}
-        </ul>
-      </div>
+      {!loading && (
+        <div className="second-block">
+          <h2>Residents</h2>
+          <ul>
+            {residents.length ? (
+              residents.map((resident) => (
+                <li
+                  key={resident.id}
+                  data-testid="resident-item"
+                  onClick={() => move(resident.id)}
+                >
+                  {resident.name}
+                </li>
+              ))
+            ) : (
+              <p>This planet doesn't have any resident!</p>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,23 +1,20 @@
-import { expectSaga } from "redux-saga-test-plan";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { select } from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-import { getPlanet } from "../../services/planets-service";
+import { initialState as planetsState } from "../../reducers/planetsReducer";
+import { getPlanet } from "../../../services/planets-service";
 import {
   getPlanetDataRequest,
   getPlanetDataRequestSuccess,
-} from "../../store/actions/planets";
-import {
+} from "../../actions/planets";
+import planetDetailsSaga, {
   planetDetailsSagaWorker,
   planetResidentsSagaWorker,
-} from "../../store/sagas/planetDetailsSaga";
-import {
-  selectPlanetId,
-  selectPlanetResidents,
-} from "../../store/selectors/planets";
-import rootReducer from "../../store/reducers/rootReducer";
-import { initialState as planetsState } from "../../store/reducers/planetsReducer";
-import { fakePeopleData, fakePlanet } from "../../helpers/mockData";
+} from "../planetDetailsSaga";
+import { selectPlanetId, selectPlanetResidents } from "../../selectors/planets";
+import rootReducer from "../../reducers/rootReducer";
+import { fakePeopleData, fakePlanet } from "../../../helpers/mockData";
 
 describe("planet details saga test", () => {
   const initialState = {
@@ -65,5 +62,22 @@ describe("planet details saga test", () => {
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPlanetDataRequest.type).run();
     expect(result.storeState.planets.error).toBeTruthy();
+  });
+
+  test("should fire on getPlanetDataRequest action", () => {
+    testSaga(planetDetailsSaga)
+      .next()
+      .takeEvery(getPlanetDataRequest.type, planetDetailsSagaWorker)
+      .finish()
+      .isDone();
+  });
+
+  test("should fire on getPlanetDataRequestSuccess action", () => {
+    testSaga(planetDetailsSaga)
+      .next()
+      .next()
+      .takeEvery(getPlanetDataRequestSuccess.type, planetResidentsSagaWorker)
+      .finish()
+      .isDone();
   });
 });
