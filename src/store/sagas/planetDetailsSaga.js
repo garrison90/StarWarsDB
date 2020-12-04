@@ -1,4 +1,4 @@
-import { all, call, put, select, takeEvery } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { getPerson } from "../../services/people-service";
 import { getPlanet } from "../../services/planets-service";
 import {
@@ -8,11 +8,10 @@ import {
   getPlanetResidentsFailure,
   getPlanetResidentsSuccess,
 } from "../actions/planets";
-import { selectPlanetId, selectPlanetResidents } from "../selectors/planets";
+import { selectPlanetId, selectPlanetResidentsIds } from "../selectors/planets";
 
 export default function* planetDetailsSaga() {
-  yield takeEvery(getPlanetDataRequest.type, planetDetailsSagaWorker);
-  yield takeEvery(getPlanetDataRequestSuccess.type, planetResidentsSagaWorker);
+  yield takeLatest(getPlanetDataRequest.type, planetDetailsSagaWorker);
 }
 
 export function* planetDetailsSagaWorker() {
@@ -20,17 +19,11 @@ export function* planetDetailsSagaWorker() {
     const id = yield select(selectPlanetId);
     const planet = yield call(getPlanet, id);
     yield put(getPlanetDataRequestSuccess(planet));
-  } catch (e) {
-    yield put(getPlanetDataRequestFailure());
-  }
-}
-
-export function* planetResidentsSagaWorker() {
-  try {
-    const residents = yield select(selectPlanetResidents);
+    const residents = yield select(selectPlanetResidentsIds);
     const results = yield all(residents.map((id) => call(getPerson, id)));
     yield put(getPlanetResidentsSuccess(results));
   } catch (e) {
+    yield put(getPlanetDataRequestFailure());
     yield put(getPlanetResidentsFailure());
   }
 }

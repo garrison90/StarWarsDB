@@ -2,40 +2,36 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   starship: {},
-  pilots: [],
-  loading: true,
-  error: false,
   id: "",
+  error: false,
+  loading: false,
 };
 
-const starshipsSlice = createSlice({
-  name: "starships",
+const starshipSlice = createSlice({
+  name: "starship",
   initialState,
   reducers: {
     getStarshipDetailsRequest(state, action) {
       state.loading = true;
-      state.id = action.payload;
       state.error = false;
+      state.id = action.payload;
     },
     getStarshipDetailsSuccess(state, action) {
       state.starship = action.payload;
       state.loading = false;
     },
     getStarshipDetailsFailure(state, action) {
-      state.loading = false;
-      state.error = true;
+      state.loading = true;
+      state.error = false;
     },
-
     getStarshipPilotsRequest(state, action) {
       state.loading = true;
       state.error = false;
     },
-
     getStarshipPilotsSuccess(state, action) {
+      state.starship.pilots = action.payload;
       state.loading = false;
-      state.pilots = action.payload;
     },
-
     getStarshipPilotsFailure(state, action) {
       state.loading = false;
       state.error = true;
@@ -50,5 +46,5 @@ export const {
   getStarshipPilotsRequest,
   getStarshipPilotsSuccess,
   getStarshipPilotsFailure,
-} = starshipsSlice.actions;
-export default starshipsSlice.reducer;
+} = starshipSlice.actions;
+export default starshipSlice.reducer;

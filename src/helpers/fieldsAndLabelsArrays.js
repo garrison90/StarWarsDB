@@ -5,6 +5,8 @@ export const peopleFields = [
   "mass",
   "hairColor",
   "eyeColor",
+  "height",
+  "mass",
 ];
 
 export const peopleLabels = [
@@ -14,25 +16,49 @@ export const peopleLabels = [
   "Mass",
   "Hair Color",
   "Eye Color",
+  "Height",
+  "Mass",
 ];
 
 export const planetFields = [
   "name",
   "diameter",
-  "rotationPeriod",
   "terrain",
   "climate",
   "gravity",
+  "surfaceWater",
+  "rotationPeriod",
+  "orbitalPeriod",
 ];
 
 export const planetLabels = [
   "Name",
   "Diameter",
-  "Rotation Period",
   "Terrain",
   "Climate",
   "Gravity",
+  "Surface Water",
+  "Rotation Period",
+  "Orbital Period",
 ];
 
-export const starshipsLabels = ["Name", "Model"];
-export const starshipsFields = ["name", "model"];
+export const starshipsLabels = [
+  "Name",
+  "Model",
+  "Manufacturer",
+  "Length",
+  "Cost in credits",
+  "Max Atmosphering Speed",
+  "Passengers",
+  "Starship Class",
+];
+export const starshipsFields = [
+  "name",
+  "model",
+  "manufacturer",
+  "length",
+  "costInCredits",
+  "maxSpeed",
+  "passengers",
+  "starshipClass",
+];

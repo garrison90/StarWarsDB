@@ -2,9 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   selectedPerson: {},
-  personHomeworld: {},
-  personStarships: [],
-  loading: true,
+  loading: false,
   error: false,
   id: "",
 };
@@ -31,8 +29,8 @@ const peopleSlice = createSlice({
       state.error = false;
     },
     getPersonStarshipsAndPlanetSuccess(state, action) {
-      state.personHomeworld = action.payload.planet;
-      state.personStarships = action.payload.starships;
+      state.selectedPerson.homeworld = action.payload.planet;
+      state.selectedPerson.starships = action.payload.starships;
       state.loading = false;
     },
     getPersonStarshipsAndPlanetFailure(state, action) {

@@ -27,7 +27,7 @@ const PlanetDetailsContainer = lazy(() =>
 );
 
 const StarshipDetailsContainer = lazy(() =>
-  import("../../containers/StarshipsDetailsContainer")
+  import("../../containers/StarshipDetailsContainer")
 );
 
 const Home = lazy(() => import("../../components/Home/Home"));

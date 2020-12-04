@@ -2,8 +2,6 @@ import { createSelector } from "@reduxjs/toolkit";
 import { idRegExp } from "../../helpers/helpers";
 
 export const selectPerson = (state) => state.people.selectedPerson;
-export const selectPersonHomeworld = (state) => state.people.personHomeworld;
-export const selectPersonStarships = (state) => state.people.personStarships;
 export const selectPeopleLoading = (state) => state.people.loading;
 export const selectPeopleError = (state) => state.people.error;
 export const selectPersonId = (state) => state.people.id;
@@ -19,4 +17,14 @@ export const selectPersonStarshipsIds = createSelector(
   (person) => {
     return person.starships.map((starship) => starship.match(idRegExp)[1]);
   }
+);
+
+export const selectPersonStarhips = createSelector(
+  selectPerson,
+  (person) => person.starships
+);
+
+export const selectPersonPlanet = createSelector(
+  selectPerson,
+  (person) => person.homeworld
 );

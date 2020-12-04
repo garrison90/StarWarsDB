@@ -16,6 +16,7 @@ export const transformPlanet = (planet) => {
     gravity: planet.gravity,
     terrain: planet.terrain,
     surfaceWater: planet.surface_water,
+    orbitalPeriod: planet.orbital_period,
   };
 };
 
