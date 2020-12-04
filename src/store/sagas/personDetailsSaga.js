@@ -6,7 +6,6 @@ import {
   getPersonDataRequest,
   getPersonDataRequestFailure,
   getPersonDataRequestSuccess,
-  getPersonStarshipsAndPlanetFailure,
   getPersonStarshipsAndPlanetSuccess,
 } from "../reducers/peopleSlice";
 import {
@@ -33,6 +32,5 @@ export function* personDetailsSagaWorker() {
     yield put(getPersonStarshipsAndPlanetSuccess({ starships, planet }));
   } catch (e) {
     yield put(getPersonDataRequestFailure());
-    yield put(getPersonStarshipsAndPlanetFailure());
   }
 }

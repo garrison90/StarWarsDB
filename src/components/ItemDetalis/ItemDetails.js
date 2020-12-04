@@ -10,9 +10,12 @@ import { PersonStarships } from "../PersonStarshipsAndPlanet/PersonStarships";
 import { PersonPlanet } from "../PersonStarshipsAndPlanet/PersonPlanet";
 import { PlanetResidents } from "../PlanetResidents/PlanetResidents";
 
-export const ItemDetails = ({ item, fields, labels }) => {
+export const ItemDetails = ({ item, fields, labels, loading, error }) => {
   const { path } = useRouteMatch();
   const { STARSHIP_DETAILS, PERSON_DETAILS, PLANET_DETAILS } = routes;
+
+  if (loading) return loading;
+  if (error) return error;
 
   return (
     <Container>

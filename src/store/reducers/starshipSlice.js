@@ -18,21 +18,12 @@ const starshipSlice = createSlice({
     },
     getStarshipDetailsSuccess(state, action) {
       state.starship = action.payload;
-      state.loading = false;
-    },
-    getStarshipDetailsFailure(state, action) {
-      state.loading = true;
-      state.error = false;
-    },
-    getStarshipPilotsRequest(state, action) {
-      state.loading = true;
-      state.error = false;
     },
     getStarshipPilotsSuccess(state, action) {
       state.starship.pilots = action.payload;
       state.loading = false;
     },
-    getStarshipPilotsFailure(state, action) {
+    getStarshipDetailsFailure(state, action) {
       state.loading = false;
       state.error = true;
     },
@@ -43,8 +34,6 @@ export const {
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   getStarshipDetailsFailure,
-  getStarshipPilotsRequest,
   getStarshipPilotsSuccess,
-  getStarshipPilotsFailure,
 } = starshipSlice.actions;
 export default starshipSlice.reducer;

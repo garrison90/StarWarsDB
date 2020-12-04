@@ -18,12 +18,12 @@ export const StarshipPilots = () => {
       <Row>
         <Col>
           {pilots && pilots.length ? (
-            pilots.map((pilot) => (
+            pilots.map((pilot, i) => (
               <ListGroup.Item
                 action
                 className="text-center"
                 variant="light"
-                key={pilot.name}
+                key={i}
                 onClick={() => move(PERSON_DETAILS.createPath(pilot.id))}
               >
                 {pilot.name}

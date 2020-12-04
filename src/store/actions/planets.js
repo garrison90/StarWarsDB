@@ -10,14 +10,6 @@ export const getPlanetDataRequestFailure = createAction(
   "planets/getPlanetDataRequestFailure"
 );
 
-export const getPlanetResidentsRequest = createAction(
-  "planets/getPlanetResidentsRequest"
-);
-
 export const getPlanetResidentsSuccess = createAction(
   "planets/getPlanetResidentsSuccess"
-);
-
-export const getPlanetResidentsFailure = createAction(
-  "planets/getPlanetResidentsFailure"
 );

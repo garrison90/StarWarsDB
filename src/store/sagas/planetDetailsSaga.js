@@ -5,7 +5,6 @@ import {
   getPlanetDataRequest,
   getPlanetDataRequestFailure,
   getPlanetDataRequestSuccess,
-  getPlanetResidentsFailure,
   getPlanetResidentsSuccess,
 } from "../actions/planets";
 import { selectPlanetId, selectPlanetResidentsIds } from "../selectors/planets";
@@ -24,6 +23,5 @@ export function* planetDetailsSagaWorker() {
     yield put(getPlanetResidentsSuccess(results));
   } catch (e) {
     yield put(getPlanetDataRequestFailure());
-    yield put(getPlanetResidentsFailure());
   }
 }

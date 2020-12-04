@@ -3,9 +3,7 @@ import {
   getPlanetDataRequest,
   getPlanetDataRequestFailure,
   getPlanetDataRequestSuccess,
-  getPlanetResidentsRequest,
   getPlanetResidentsSuccess,
-  getPlanetResidentsFailure,
 } from "../actions/planets";
 
 export const initialState = {
@@ -24,22 +22,13 @@ export default createReducer(initialState, (builder) => {
     })
     .addCase(getPlanetDataRequestSuccess, (state, action) => {
       state.planet = action.payload;
-      state.loading = false;
-    })
-    .addCase(getPlanetDataRequestFailure, (state, action) => {
-      state.error = true;
-      state.loading = false;
-    })
-    .addCase(getPlanetResidentsRequest, (state, action) => {
-      state.loading = true;
-      state.error = false;
     })
     .addCase(getPlanetResidentsSuccess, (state, action) => {
       state.planet.residents = action.payload;
       state.loading = false;
     })
-    .addCase(getPlanetResidentsFailure, (state, action) => {
-      state.loading = false;
+    .addCase(getPlanetDataRequestFailure, (state, action) => {
       state.error = true;
+      state.loading = false;
     });
 });

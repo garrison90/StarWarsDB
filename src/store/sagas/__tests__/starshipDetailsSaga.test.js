@@ -4,9 +4,9 @@ import { select } from "redux-saga-test-plan/matchers";
 import {
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
-  initialState as starshipsState,
-} from "../../reducers/starshipsSlice";
-import { selectPilotsIds, selectStarshipId } from "../../selectors/starships";
+  initialState as starshipState,
+} from "../../reducers/starshipSlice";
+import { selectPilotsIds, selectStarshipId } from "../../selectors/starship";
 import starshipDetailsSaga, {
   starshipDetailsSagaWorker,
   starshipPilotsSagaWorker,
@@ -18,7 +18,7 @@ import { getStarship } from "../../../services/starships-service";
 
 describe("starship details saga test", () => {
   const initialState = {
-    starships: starshipsState,
+    starships: starshipState,
   };
   const error = new Error("error");
 
@@ -27,30 +27,27 @@ describe("starship details saga test", () => {
       .provide([
         [select(selectStarshipId), 23],
         [matchers.call.fn(getStarship), fakeStarship],
-      ])
-      .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getStarshipDetailsRequest.type).run();
-    expect(result.storeState.starships.starship).toStrictEqual(fakeStarship);
-  });
-
-  test("should throw error in case of failure in starship pilots saga", async () => {
-    const saga = expectSaga(starshipPilotsSagaWorker)
-      .provide({ all: () => throwError(error) })
-      .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getStarshipDetailsSuccess.type).run();
-    expect(result.storeState.starships.error).toBeTruthy();
-  });
-
-  test("should load starship pilots in case of success", async () => {
-    const saga = expectSaga(starshipPilotsSagaWorker)
-      .provide([
-        [select(selectPilotsIds), [1, 2]],
         { all: () => fakePeopleData },
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getStarshipDetailsSuccess.type).run();
-    expect(result.storeState.starships.pilots).toStrictEqual(fakePeopleData);
+    const result = await saga.dispatch(getStarshipDetailsRequest.type).run();
+    expect(result.storeState.starship.starship).toStrictEqual(fakeStarship);
+    expect(result.storeState.starship.starship.pilots).toStrictEqual(
+      fakePeopleData
+    );
   });
+
+  /*  test("should throw error in case of failure in starship pilots request", async () => {
+    const saga = expectSaga(starshipPilotsSagaWorker)
+      .provide([
+        [select(selectStarshipId), 23],
+        [matchers.call.fn(getStarship), fakeStarship],
+        { all: () => throwError(error) },
+      ])
+      .withReducer(rootReducer, initialState);
+    const result = await saga.dispatch(getStarshipDetailsRequest.type).run();
+    expect(result.storeState.starship.error).toBeTruthy();
+  }); */
 
   test("should throw error in case of failure in starship details saga", async () => {
     const saga = expectSaga(starshipDetailsSagaWorker)
@@ -60,22 +57,13 @@ describe("starship details saga test", () => {
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getStarshipDetailsRequest.type).run();
-    expect(result.storeState.starships.error).toBeTruthy();
+    expect(result.storeState.starship.error).toBeTruthy();
   });
 
   test("should fire on getStarshipDetailsRequest action", () => {
     testSaga(starshipDetailsSaga)
       .next()
       .takeLatest(getStarshipDetailsRequest.type, starshipDetailsSagaWorker)
-      .finish()
-      .isDone();
-  });
-
-  test("should fire on getStarshipDetailsSuccess action", () => {
-    testSaga(starshipDetailsSaga)
-      .next()
-      .next()
-      .takeEvery(getStarshipDetailsSuccess.type, starshipPilotsSagaWorker)
       .finish()
       .isDone();
   });

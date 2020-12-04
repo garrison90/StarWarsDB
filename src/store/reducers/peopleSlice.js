@@ -18,22 +18,13 @@ const peopleSlice = createSlice({
     },
     getPersonDataRequestSuccess(state, action) {
       state.selectedPerson = action.payload;
-      state.loading = false;
-    },
-    getPersonDataRequestFailure(state, action) {
-      state.loading = false;
-      state.error = true;
-    },
-    getPersonStarshipsAndPlanetRequest(state, action) {
-      state.loading = true;
-      state.error = false;
     },
     getPersonStarshipsAndPlanetSuccess(state, action) {
       state.selectedPerson.homeworld = action.payload.planet;
       state.selectedPerson.starships = action.payload.starships;
       state.loading = false;
     },
-    getPersonStarshipsAndPlanetFailure(state, action) {
+    getPersonDataRequestFailure(state, action) {
       state.loading = false;
       state.error = true;
     },
@@ -44,8 +35,6 @@ export const {
   getPersonDataRequestFailure,
   getPersonDataRequestSuccess,
   getPersonDataRequest,
-  getPersonStarshipsAndPlanetRequest,
   getPersonStarshipsAndPlanetSuccess,
-  getPersonStarshipsAndPlanetFailure,
 } = peopleSlice.actions;
 export default peopleSlice.reducer;
