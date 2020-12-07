@@ -19,12 +19,6 @@ export const selectPersonStarshipsIds = createSelector(
   }
 );
 
-export const selectPersonStarhips = createSelector(
-  selectPerson,
-  (person) => person.starships
-);
+export const selectPersonStarships = (state) => state.people.personStarships;
 
-export const selectPersonPlanet = createSelector(
-  selectPerson,
-  (person) => person.homeworld
-);
+export const selectPersonPlanet = (state) => state.people.personHomeworld;

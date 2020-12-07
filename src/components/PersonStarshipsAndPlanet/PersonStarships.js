@@ -5,12 +5,14 @@ import Row from "react-bootstrap/esm/Row";
 import { useSelector } from "react-redux";
 import useSwitchTo from "../../hooks/useSwitchTo";
 import { routes } from "../../constansts/routes";
-import { selectPersonStarhips } from "../../store/selectors/people";
+import { selectPersonStarships } from "../../store/selectors/people";
 
 export const PersonStarships = () => {
-  const starships = useSelector(selectPersonStarhips);
+  const starships = useSelector(selectPersonStarships);
   const move = useSwitchTo();
   const { STARSHIP_DETAILS } = routes;
+
+  console.log(starships);
 
   return (
     <>

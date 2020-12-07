@@ -12,7 +12,4 @@ export const selectPlanetResidentsIds = createSelector(
   }
 );
 
-export const selectPlanetResidents = createSelector(
-  selectPlanet,
-  (planet) => planet.residents
-);
+export const selectPlanetResidents = (state) => state.planets.planetResidents;

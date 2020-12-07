@@ -1,34 +1,47 @@
-import starshipsSlice, {
+import starshipSlice, {
   getStarshipDetailsFailure,
   getStarshipDetailsRequest,
   getStarshipDetailsSuccess,
   initialState,
-} from "../../reducers/starshipsSlice";
-import { fakeId, fakeStarship } from "../../../helpers/mockData";
+} from "../../reducers/starshipSlice";
+import {
+  fakeId,
+  fakePeopleData,
+  fakeStarship,
+} from "../../../helpers/mockData";
+import { getStarshipPilotsSuccess } from "../starshipSlice";
 
 describe("test starships slice", () => {
-  it("get starship details data request", () => {
-    const newState = starshipsSlice(
+  it("should put starship id to state", () => {
+    const newState = starshipSlice(
       initialState,
       getStarshipDetailsRequest(fakeId)
     );
-    expect(newState.id).toBe(fakeId);
-    expect(newState.loading).toBeTruthy();
     expect(newState.error).toBeFalsy();
+    expect(newState.loading).toBeTruthy();
+    expect(newState.id).toBe(fakeId);
   });
 
-  it("get starship details data request success", () => {
-    const newState = starshipsSlice(
+  it("should put starship details data to state", () => {
+    const newState = starshipSlice(
       initialState,
       getStarshipDetailsSuccess(fakeStarship)
     );
 
-    expect(newState.loading).toBeFalsy();
     expect(newState.starship).toEqual(fakeStarship);
   });
 
-  it("get starship details request failure", () => {
-    const newState = starshipsSlice(initialState, getStarshipDetailsFailure());
+  it("should put starship pilots data to state", () => {
+    const newState = starshipSlice(
+      initialState,
+      getStarshipPilotsSuccess(fakePeopleData)
+    );
+    expect(newState.starshipPilots).toEqual(fakePeopleData);
+    expect(newState.loading).toBeFalsy();
+  });
+
+  it("should change error property on true in case of failure request", () => {
+    const newState = starshipSlice(initialState, getStarshipDetailsFailure());
     expect(newState.loading).toBeFalsy();
     expect(newState.error).toBeTruthy();
   });

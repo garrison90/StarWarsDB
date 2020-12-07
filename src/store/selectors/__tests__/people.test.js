@@ -8,9 +8,9 @@ import {
   selectPeopleError,
   selectPeopleLoading,
   selectPerson,
-  selectPersonHomeworld,
   selectPersonHomeworldId,
   selectPersonId,
+  selectPersonPlanet,
   selectPersonStarships,
   selectPersonStarshipsIds,
 } from "../people";
@@ -36,12 +36,12 @@ describe("people selectors test", () => {
 
   it("should return items data", () => {
     expect(selectPerson(state)).toEqual(fakePerson);
-    expect(selectPersonHomeworld(state)).toEqual(fakePlanet);
-    expect(selectPersonStarships(state)).toEqual(fakeStarships);
+    expect(selectPersonPlanet(state)).toEqual(fakePlanet);
     expect(selectPeopleLoading(state)).toEqual(false);
     expect(selectPeopleError(state)).toEqual(true);
     expect(selectPersonId(state)).toEqual(23);
     expect(selectPersonStarshipsIds(state)).toEqual(["12", "22"]);
     expect(selectPersonHomeworldId(state)).toEqual("1");
+    expect(selectPersonStarships(state)).toEqual(fakeStarships);
   });
 });

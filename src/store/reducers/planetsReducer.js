@@ -8,6 +8,7 @@ import {
 
 export const initialState = {
   planet: {},
+  planetResidents: [],
   loading: true,
   id: "",
   error: false,
@@ -24,7 +25,7 @@ export default createReducer(initialState, (builder) => {
       state.planet = action.payload;
     })
     .addCase(getPlanetResidentsSuccess, (state, action) => {
-      state.planet.residents = action.payload;
+      state.planetResidents = action.payload;
       state.loading = false;
     })
     .addCase(getPlanetDataRequestFailure, (state, action) => {

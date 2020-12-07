@@ -5,8 +5,8 @@ import {
   selectPlanetError,
   selectPlanetId,
   selectPlanetResidents,
+  selectPlanetResidentsIds,
   selectPlanetsLoading,
-  selectResidents,
 } from "../planets";
 
 describe("planets selectors test", () => {
@@ -18,7 +18,7 @@ describe("planets selectors test", () => {
   let state = {
     planets: {
       planet: fakePlanet,
-      residents: fakePeopleData,
+      planetResidents: fakePeopleData,
       loading: false,
       id: 35,
       error: false,
@@ -27,10 +27,10 @@ describe("planets selectors test", () => {
 
   it("should return items data", () => {
     expect(selectPlanet(state)).toEqual(fakePlanet);
-    expect(selectResidents(state)).toEqual(fakePeopleData);
     expect(selectPlanetsLoading(state)).toEqual(false);
     expect(selectPlanetId(state)).toEqual(35);
     expect(selectPlanetError(state)).toEqual(false);
-    expect(selectPlanetResidents(state)).toEqual(["43", "62"]);
+    expect(selectPlanetResidentsIds(state)).toEqual(["43", "62"]);
+    expect(selectPlanetResidents(state)).toEqual(fakePeopleData);
   });
 });

@@ -7,7 +7,6 @@ import {
   selectPlanetsLoading,
 } from "../store/selectors/planets";
 import { getPlanetDataRequest } from "../store/actions/planets";
-
 import { ItemDetails } from "../components/ItemDetalis/ItemDetails";
 import { planetFields, planetLabels } from "../helpers/fieldsAndLabelsArrays";
 import useLoading from "../hooks/useLoading";

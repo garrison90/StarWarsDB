@@ -4,14 +4,10 @@ import { getPerson } from "../../services/people-service";
 import {
   getStarshipDetailsSuccess,
   getStarshipDetailsFailure,
-  getStarshipPilotsSuccess,
   getStarshipDetailsRequest,
+  getStarshipPilotsSuccess,
 } from "../reducers/starshipSlice";
-
-import {
-  selectStarshipId,
-  selectStarshipPilotsIds,
-} from "../selectors/starship";
+import { selectPilotsIds, selectStarshipId } from "../selectors/starship";
 
 export default function* starshipDetailsSaga() {
   yield takeLatest(getStarshipDetailsRequest.type, starshipDetailsSagaWorker);
@@ -20,9 +16,9 @@ export default function* starshipDetailsSaga() {
 export function* starshipDetailsSagaWorker() {
   try {
     const id = yield select(selectStarshipId);
-    const item = yield call(getStarship, id);
-    yield put(getStarshipDetailsSuccess(item));
-    const pilotsIds = yield select(selectStarshipPilotsIds);
+    const starship = yield call(getStarship, id);
+    yield put(getStarshipDetailsSuccess(starship));
+    const pilotsIds = yield select(selectPilotsIds);
     const pilots = yield all(pilotsIds.map((id) => call(getPerson, id)));
     yield put(getStarshipPilotsSuccess(pilots));
   } catch (e) {

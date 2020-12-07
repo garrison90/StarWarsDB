@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   starship: {},
+  starshipPilots: [],
   id: "",
   error: false,
   loading: false,
@@ -20,8 +21,8 @@ const starshipSlice = createSlice({
       state.starship = action.payload;
     },
     getStarshipPilotsSuccess(state, action) {
-      state.starship.pilots = action.payload;
       state.loading = false;
+      state.starshipPilots = action.payload;
     },
     getStarshipDetailsFailure(state, action) {
       state.loading = false;

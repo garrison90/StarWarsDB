@@ -3,9 +3,7 @@ import {
   getPlanetDataRequest,
   getPlanetDataRequestSuccess,
   getPlanetDataRequestFailure,
-  getPlanetResidentsRequest,
   getPlanetResidentsSuccess,
-  getPlanetResidentsFailure,
 } from "../../actions/planets";
 import planetsReducer, { initialState } from "../planetsReducer";
 
@@ -25,7 +23,6 @@ describe("test planets reducer", () => {
     );
 
     expect(newState.planet).toEqual(fakePlanet);
-    expect(newState.loading).toBeFalsy();
   });
 
   it("get planet details request error", () => {
@@ -34,13 +31,7 @@ describe("test planets reducer", () => {
       getPlanetDataRequestFailure()
     );
     expect(newState.loading).toBeFalsy();
-    expect(newState.error).toBe(true);
-  });
-
-  it("get planet residents request", () => {
-    const newState = planetsReducer(initialState, getPlanetResidentsRequest());
-    expect(newState.loading).toBeTruthy();
-    expect(newState.error).toBeFalsy();
+    expect(newState.error).toBeTruthy();
   });
 
   it("get planet residents success", () => {
@@ -49,13 +40,7 @@ describe("test planets reducer", () => {
       getPlanetResidentsSuccess(fakePeopleData)
     );
 
-    expect(newState.residents).toEqual(fakePeopleData);
+    expect(newState.planetResidents).toEqual(fakePeopleData);
     expect(newState.loading).toBeFalsy();
-  });
-
-  it("get planet residents failure", () => {
-    const newState = planetsReducer(initialState, getPlanetResidentsFailure());
-    expect(newState.loading).toBeFalsy();
-    expect(newState.error).toBe(true);
   });
 });

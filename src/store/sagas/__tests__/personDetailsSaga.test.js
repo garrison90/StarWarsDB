@@ -8,6 +8,7 @@ import {
   fakeStarships,
 } from "../../../helpers/mockData";
 import { getPerson } from "../../../services/people-service";
+import { getStarship } from "../../../services/starships-service";
 import {
   getPersonDataRequest,
   getPersonDataRequestSuccess,
@@ -35,36 +36,30 @@ describe("test person details saga", () => {
       .provide([
         [select(selectPersonId), 23],
         [matchers.call.fn(getPerson), fakePerson],
+        [select(selectPersonHomeworldId), 7],
+        [select(selectPersonStarshipsIds), ["3", "9"]],
+        { all: () => [fakeStarships, fakePlanet] },
       ])
       .withReducer(rootReducer, initialState);
     const result = await saga.dispatch(getPersonDataRequest.type).run();
     expect(result.storeState.people.selectedPerson).toStrictEqual(fakePerson);
-  });
-
-  test("should load person starships and person homeworld in case of success", async () => {
-    const saga = expectSaga(personStarshipsAndPlanetSagaWorker)
-      .provide([
-        [select(selectPersonHomeworldId), 17],
-        [select(selectPersonStarshipsIds), [1, 7, 9]],
-        { all: () => [fakeStarships, fakePlanet] },
-      ])
-      .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getPersonDataRequestSuccess.type).run();
-    expect(result.storeState.people.personHomeworld).toStrictEqual(fakePlanet);
     expect(result.storeState.people.personStarships).toStrictEqual(
       fakeStarships
     );
+    expect(result.storeState.people.personHomeworld).toStrictEqual(fakePlanet);
   });
 
-  test("should throw error in case of failure in person starships and planet saga worker", async () => {
-    const saga = expectSaga(personStarshipsAndPlanetSagaWorker)
+  test("should throw error if person starships data request failed", async () => {
+    const saga = expectSaga(personDetailsSagaWorker)
       .provide([
-        [select(selectPersonHomeworldId), 17],
-        [select(selectPersonStarshipsIds), [1, 7, 9]],
+        [select(selectPersonId), 23],
+        [matchers.call.fn(getPerson), fakePerson],
+        [select(selectPersonHomeworldId), 7],
+        [select(selectPersonStarshipsIds), ["3", "9"]],
         { all: () => throwError(error) },
       ])
       .withReducer(rootReducer, initialState);
-    const result = await saga.dispatch(getPersonDataRequestSuccess.type).run();
+    const result = await saga.dispatch(getPersonDataRequest.type).run();
     expect(result.storeState.people.error).toBeTruthy();
   });
 
@@ -83,18 +78,6 @@ describe("test person details saga", () => {
     testSaga(personDetailsSaga)
       .next()
       .takeLatest(getPersonDataRequest.type, personDetailsSagaWorker)
-      .finish()
-      .isDone();
-  });
-
-  test("should fire on getPersonDataRequestSuccess action", () => {
-    testSaga(personDetailsSaga)
-      .next()
-      .next()
-      .takeEvery(
-        getPersonDataRequestSuccess.type,
-        personStarshipsAndPlanetSagaWorker
-      )
       .finish()
       .isDone();
   });
