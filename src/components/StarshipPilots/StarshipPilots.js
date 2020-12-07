@@ -31,7 +31,7 @@ export const StarshipPilots = () => {
             ))
           ) : (
             <ListGroup.Item className="text-center" variant="warning">
-              This starship don't have pilots!
+              This starship doesn't have pilots!
             </ListGroup.Item>
           )}
         </Col>

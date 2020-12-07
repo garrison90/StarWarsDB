@@ -12,8 +12,6 @@ export const PersonStarships = () => {
   const move = useSwitchTo();
   const { STARSHIP_DETAILS } = routes;
 
-  console.log(starships);
-
   return (
     <>
       <h4 className="text-center m-4">Person Starships: </h4>
@@ -33,7 +31,7 @@ export const PersonStarships = () => {
             ))
           ) : (
             <ListGroup.Item className="text-center" variant="warning">
-              This person don't have any starship!
+              This person doesn't have any starship!
             </ListGroup.Item>
           )}
         </Col>
