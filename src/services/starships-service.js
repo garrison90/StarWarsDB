@@ -3,7 +3,7 @@ import { httpClient } from "./api";
 
 const getAllStarships = async ([query, pageNumber]) => {
   const params = { search: query, page: pageNumber };
-  const response = await httpClient.get(`starships`, { params });
+  const response = await httpClient.get(`/starships/`, { params });
   const itemsData = response.data.results;
   let items = itemsData.map(transformStarship);
   return {
