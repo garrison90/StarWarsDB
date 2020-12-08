@@ -1,13 +1,16 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { getPerson } from "../../services/people-service";
-import { getPlanet } from "../../services/planets-service";
+import { getPerson } from "services/people-service";
+import { getPlanet } from "services/planets-service";
 import {
   getPlanetDataRequest,
   getPlanetDataRequestFailure,
   getPlanetDataRequestSuccess,
   getPlanetResidentsSuccess,
-} from "../actions/planets";
-import { selectPlanetId, selectPlanetResidentsIds } from "../selectors/planets";
+} from "store/actions/planets";
+import {
+  selectPlanetId,
+  selectPlanetResidentsIds,
+} from "store/selectors/planets";
 
 export default function* planetDetailsSaga() {
   yield takeLatest(getPlanetDataRequest.type, planetDetailsSagaWorker);

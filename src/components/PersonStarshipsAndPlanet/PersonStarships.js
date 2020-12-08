@@ -1,11 +1,10 @@
-import React from "react";
 import Col from "react-bootstrap/esm/Col";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import { useSelector } from "react-redux";
-import useSwitchTo from "../../hooks/useSwitchTo";
-import { routes } from "../../constansts/routes";
-import { selectPersonStarships } from "../../store/selectors/people";
+import useSwitchTo from "hooks/useSwitchTo";
+import { routes } from "constansts/routes";
+import { selectPersonStarships } from "store/selectors/people";
 
 export const PersonStarships = () => {
   const starships = useSelector(selectPersonStarships);
@@ -18,12 +17,12 @@ export const PersonStarships = () => {
       <Row>
         <Col>
           {starships && starships.length ? (
-            starships.map((starship, i) => (
+            starships.map((starship) => (
               <ListGroup.Item
                 action
                 className="text-center"
                 variant="light"
-                key={i}
+                key={starship.id}
                 onClick={() => move(STARSHIP_DETAILS.createPath(starship.id))}
               >
                 {starship.name}

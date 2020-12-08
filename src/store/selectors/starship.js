@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { idRegExp } from "../../helpers/helpers";
+import { idRegExp } from "helpers/helpers";
 
 export const selectStarshipId = (state) => state.starship.id;
 export const selectStarship = (state) => state.starship.starship;

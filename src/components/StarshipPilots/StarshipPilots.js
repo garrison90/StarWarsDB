@@ -1,8 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { selectStarshipPilots } from "../../store/selectors/starship";
-import useSwitchTo from "../../hooks/useSwitchTo";
-import { routes } from "../../constansts/routes";
+import { selectStarshipPilots } from "store/selectors/starship";
+import useSwitchTo from "hooks/useSwitchTo";
+import { routes } from "constansts/routes";
 import Col from "react-bootstrap/esm/Col";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
@@ -18,12 +17,12 @@ export const StarshipPilots = () => {
       <Row>
         <Col>
           {pilots && pilots.length ? (
-            pilots.map((pilot, i) => (
+            pilots.map((pilot) => (
               <ListGroup.Item
                 action
                 className="text-center"
                 variant="light"
-                key={i}
+                key={pilot.id}
                 onClick={() => move(PERSON_DETAILS.createPath(pilot.id))}
               >
                 {pilot.name}

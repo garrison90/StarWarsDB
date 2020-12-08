@@ -1,12 +1,11 @@
-import React from "react";
-import { routes } from "../../constansts/routes";
+import { routes } from "constansts/routes";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import {
   getAllPeopleRequest,
   getPlanetsDataRequest,
   getStarshipsRequest,
-} from "../../store/reducers/itemsSlice";
+} from "store/reducers/itemsSlice";
 import {
   peopleFields,
   peopleLabels,
@@ -14,23 +13,23 @@ import {
   planetLabels,
   starshipsFields,
   starshipsLabels,
-} from "../../helpers/fieldsAndLabelsArrays";
+} from "helpers/fieldsAndLabelsArrays";
 
-const ItemsContainer = lazy(() => import("../../containers/ItemsContainer"));
+const ItemsContainer = lazy(() => import("containers/ItemsContainer"));
 
 const PersonDetailsContainer = lazy(() =>
-  import("../../containers/PersonDetailsContainer")
+  import("containers/PersonDetailsContainer")
 );
 
 const PlanetDetailsContainer = lazy(() =>
-  import("../../containers/PlanetDetailsContainer")
+  import("containers/PlanetDetailsContainer")
 );
 
 const StarshipDetailsContainer = lazy(() =>
-  import("../../containers/StarshipDetailsContainer")
+  import("containers/StarshipDetailsContainer")
 );
 
-const Home = lazy(() => import("../../components/Home/Home"));
+const Home = lazy(() => import("components/Home/Home"));
 
 export const Routes = () => {
   const {

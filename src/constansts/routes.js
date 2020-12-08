@@ -1,7 +1,6 @@
 export const routes = {
   HOME: {
     INDEX: "/",
-    //DEFAULT_PATH: перенаправить на страницу ошибки
   },
   STARSHIPS: {
     INDEX: "/starships",

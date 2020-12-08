@@ -1,13 +1,13 @@
 import { call, put, select, getContext, takeLatest } from "redux-saga/effects";
-import { sagaHelper } from "../../helpers/sagaHelpers";
+import { sagaHelper } from "helpers/sagaHelpers";
 import {
   getAllPeopleRequest,
   getItemsRequestSuccess,
   getItemsRequestFailure,
   getPlanetsDataRequest,
   getStarshipsRequest,
-} from "../reducers/itemsSlice";
-import { selectPage, selectQuery } from "../selectors/items";
+} from "store/reducers/itemsSlice";
+import { selectPage, selectQuery } from "store/selectors/items";
 
 export default function* itemsSaga() {
   yield takeLatest(

@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { idRegExp } from "../../helpers/helpers";
+import { idRegExp } from "helpers/helpers";
 
 export const selectPlanet = (state) => state.planets.planet;
 export const selectPlanetsLoading = (state) => state.planets.loading;

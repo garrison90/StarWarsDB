@@ -1,13 +1,13 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { getStarship } from "../../services/starships-service";
-import { getPerson } from "../../services/people-service";
+import { getStarship } from "services/starships-service";
+import { getPerson } from "services/people-service";
 import {
   getStarshipDetailsSuccess,
   getStarshipDetailsFailure,
   getStarshipDetailsRequest,
   getStarshipPilotsSuccess,
-} from "../reducers/starshipSlice";
-import { selectPilotsIds, selectStarshipId } from "../selectors/starship";
+} from "store/reducers/starshipSlice";
+import { selectPilotsIds, selectStarshipId } from "store/selectors/starship";
 
 export default function* starshipDetailsSaga() {
   yield takeLatest(getStarshipDetailsRequest.type, starshipDetailsSagaWorker);

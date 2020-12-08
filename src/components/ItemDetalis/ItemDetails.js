@@ -1,14 +1,13 @@
-import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
-import { StarshipPilots } from "../StarshipPilots/StarshipPilots";
 import { useRouteMatch } from "react-router-dom";
-import { routes } from "../../constansts/routes";
-import { PersonStarships } from "../PersonStarshipsAndPlanet/PersonStarships";
-import { PersonPlanet } from "../PersonStarshipsAndPlanet/PersonPlanet";
-import { PlanetResidents } from "../PlanetResidents/PlanetResidents";
+import { StarshipPilots } from "components/StarshipPilots/StarshipPilots";
+import { routes } from "constansts/routes";
+import { PersonStarships } from "components/PersonStarshipsAndPlanet/PersonStarships";
+import { PersonPlanet } from "components/PersonStarshipsAndPlanet/PersonPlanet";
+import { PlanetResidents } from "components/PlanetResidents/PlanetResidents";
 
 export const ItemDetails = ({ item, fields, labels, loading, error }) => {
   const { path } = useRouteMatch();

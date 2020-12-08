@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useLoading from "../hooks/useLoading";
-import useSwitchTo from "../hooks/useSwitchTo";
-import useError from "../hooks/useError";
-import { clearItems, setPageNumber } from "../store/reducers/itemsSlice";
-import { Items } from "../components/Items/Items";
+import useLoading from "hooks/useLoading";
+import useSwitchTo from "hooks/useSwitchTo";
+import useError from "hooks/useError";
+import { clearItems, setPageNumber } from "store/reducers/itemsSlice";
+import { Items } from "components/Items/Items";
 import {
   selectItems,
   selectItemsError,
@@ -12,9 +12,9 @@ import {
   selectHasMore,
   selectQuery,
   selectPage,
-} from "../store/selectors/items";
+} from "store/selectors/items";
 import { useLocation } from "react-router-dom";
-import { SearchForm } from "../components/SearchForm/SearchForm";
+import { SearchForm } from "components/SearchForm/SearchForm";
 
 function ItemsContainer({ getData, labels, fields }) {
   const loading = useLoading(selectItemsLoading);

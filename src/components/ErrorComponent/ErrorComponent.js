@@ -1,5 +1,4 @@
-import React from "react";
-import icon from "../../assets/death-star.png";
+import icon from "assets/death-star.png";
 import "./ErrorComponent.css";
 
 const ErrorComponent = () => {

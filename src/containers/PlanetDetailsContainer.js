@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   selectPlanet,
   selectPlanetError,
   selectPlanetsLoading,
-} from "../store/selectors/planets";
-import { getPlanetDataRequest } from "../store/actions/planets";
-import { ItemDetails } from "../components/ItemDetalis/ItemDetails";
-import { planetFields, planetLabels } from "../helpers/fieldsAndLabelsArrays";
-import useLoading from "../hooks/useLoading";
-import useError from "../hooks/useError";
+} from "store/selectors/planets";
+import { getPlanetDataRequest } from "store/actions/planets";
+import { ItemDetails } from "components/ItemDetalis/ItemDetails";
+import { planetFields, planetLabels } from "helpers/fieldsAndLabelsArrays";
+import useLoading from "hooks/useLoading";
+import useError from "hooks/useError";
 
 function PlanetDetailsContainer() {
   const { id } = useParams();
